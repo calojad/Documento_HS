@@ -184,7 +184,7 @@ class DocumentoController extends Controller
         $templateWord->setValue('capacitacion',$si_no[$empresa->capacitacionRiesgo]);
         $templateWord->setValue('plan',$si_no[$empresa->contingentcia]);
         $templateWord->setValue('estadistico',$si_no[$empresa->registroEstadist]);
-        $templateWord->setValue('morbilidad',$si_no[$empresa->registroMobilidad]);
+        $templateWord->setValue('morbilidad',$si_no[$empresa->registroMorbilidad]);
         $templateWord->setValue('examen',$si_no[$empresa->examenMedico]);
 //      OBJETIVOS
         $templateWord->cloneRow('objetivos',count($objetivos));

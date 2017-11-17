@@ -11,7 +11,7 @@ class Empresa extends Model
     const UPDATED_AT = 'updated_At';
     public $timestamps = true;
 
-    protected $fillable = ['ruc','nombre','logo','tipoEmpresa','privada_publica','razonSocial','actiEconomica','tamaño','hombres','mujeres','menores','vulnerables','centros','otrosCentros','comiteSH','unidadSeg','servicioMed','capacitacionRiesgo','contingentcia','registroEstadist','registroMobilidad','examenMedico'];
+    protected $fillable = ['ruc','nombre','logo','tipoEmpresa','privada_publica','razonSocial','actiEconomica','tamaño','hombres','mujeres','menores','vulnerables','centros','otrosCentros','comiteSH','unidadSeg','servicioMed','capacitacionRiesgo','contingentcia','registroEstadist','registroMorbilidad','examenMedico'];
 
     public function direccionMatriz($id){
         return EmpresaDireccion::where('empresa_id',$id)

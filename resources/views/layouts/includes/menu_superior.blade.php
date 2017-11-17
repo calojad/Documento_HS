@@ -37,15 +37,15 @@
 
                         <ul class="dropdown-menu" role="menu">
                             <li>
+                                <a href="{{ URL::to('/home') }}"><i class="fa fa-file"></i> Documento</a>
+                            </li>
+                            <li>
                                 <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                     <i class="fa fa-sign-out"></i> Logout
                                 </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     {{ csrf_field() }}
                                 </form>
-                            </li>
-                            <li>
-                                <a href="{{ URL::to('/home') }}"><i class="fa fa-file"></i> Documento</a>
                             </li>
                         </ul>
                     </li>

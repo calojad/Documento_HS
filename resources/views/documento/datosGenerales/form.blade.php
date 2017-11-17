@@ -283,7 +283,7 @@
                                         <input name="registroMobilidad" type="radio" value="1" checked {{$empresa->registroMobilidad == 1 ?'checked':''}}> Si
                                     </label>
                                     <label>
-                                        <input name="registroMobilidad" type="radio" value="0" {{$empresa->registroMobilidad == 0 ?'checked':''}}> No
+                                        <input name="registroMobilidad" type="radio" value="0" {{$empresa->registroMorbilidad == 0 ?'checked':''}}> No
                                     </label>
                                 </div>
                             </div>
