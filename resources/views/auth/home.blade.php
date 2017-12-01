@@ -8,14 +8,14 @@
             <div class="panel panel-default">
                 <div class="panel-heading">REGLAMENTO INTERNO DE HIGIENE Y SEGURIDAD</div>
                 <div class="panel-body">
-                    @if (session('status'))
+                    {{--@if (session('status'))
                         <div class="alert alert-success">
                             <button type="button" class="close" data-dismiss="alert">
                                 <i class="fa fa-times"></i>
                             </button>
                             {{ session('status') }}
                         </div>
-                    @endif
+                    @endif--}}
                     <div class="col-md-12">
                         <a class="btn btn-primary" href="{{URL::to('/documento/datosgenerales')}}"><i class="fa fa-plus-square"></i> Nuevo</a>
                     </div>

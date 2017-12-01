@@ -10,6 +10,7 @@ use App\Models\EmpresaDireccion;
 use App\Models\Representante;
 use App\Models\Objetivo;
 use App\Models\Politica;
+use App\Models\Riesgos;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -33,7 +34,6 @@ class DocumentoController extends Controller
              ->get();
         return view('documento.datosGenerales.form', compact('empresa','direcciones'));
     }
-
     public function postDatosgenerales(){
         $data = Input::all();
         if (Input::hasFile('logo')) {
@@ -150,6 +150,10 @@ class DocumentoController extends Controller
             DocumentoPolitica::create($dataP);
         }
         return Redirect::to('/home');
+    }
+    public function getIdentificariesgos(){
+        $riesgos = Riesgos::orderBy('tipoRiesgo_id','asc')->get();
+        return view('documento.matrizRiesgos.form', compact('riesgos'));
     }
     public function getExportplantilla($doc=0){
         $arrTamaño = [1=>"Microempresa",2=>"Pequeña empresa",3=>"Mediana empresa A",4=>"Mediana empresa B",5=>"Gran empresa"];
