@@ -20,18 +20,20 @@
                                         <th>Probabilidad</th>
                                         <th>Consecuencia</th>
                                         <th>Estimación</th>
+                                        <th>Control</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{ $count=0 }}
+                                    <!-- {{ $count=0 }} -->
                                     @foreach($riesgos as $riesgo)
-                                    {{ $count++ }}
+                                    <!-- {{ $count++ }} -->
                                     <tr>
                                         <td>{{$count}}</td>
                                         <td>{{$riesgo->riesgo}}</td>
-                                        <td><select></select></td>
-                                        <td><select></select></td>
+                                        <td>{!! Form::select('probabilidad[]',$probabilidades,0,array('required'=>'required')) !!}</td>
+                                        <td>{!! Form::select('consecuencias[]',$consecuencias,0,array('required'=>'required')) !!}</td>
                                         <td><label id="estimacion" class="label"></label></td>
+                                        <td>{!! Form::select('control[]',$control,0,array('required'=>'required')) !!}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>

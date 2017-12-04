@@ -158,7 +158,10 @@ class DocumentoController extends Controller
         $tipoRiesgoCount = Riesgos::select(DB::raw('tipoRiesgo_id,count(tipoRiesgo_id) as TR_count'))
              ->groupBy('tipoRiesgo_id')
              ->get();
-        return view('documento.matrizRiesgos.form', compact('riesgos','tipoRiesgoCount'));
+        $probabilidades=[0=>"--Seleccionar--",1=>"B-Baja",2=>"M-Media",3=>"A-Alta"];
+        $consecuencias=[0=>"--Seleccionar--",1=>"LD-Ligeramente Dañino",2=>"D-Dañino",3=>"ED-Extremadamente Dañino"];
+        $control=[0=>"--Seleccionar--",1=>"Medio",2=>"Fuente",3=>"Persona"];
+        return view('documento.matrizRiesgos.form', compact('riesgos','tipoRiesgoCount','probabilidades','consecuencias','control'));
     }
     public function getExportplantilla($doc=0){
         $arrTamaño = [1=>"Microempresa",2=>"Pequeña empresa",3=>"Mediana empresa A",4=>"Mediana empresa B",5=>"Gran empresa"];
