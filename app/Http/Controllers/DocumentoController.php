@@ -153,7 +153,7 @@ class DocumentoController extends Controller
         return Redirect::to('/home');
     }
     public function getIdentificariesgos(){
-        $riesgos = Riesgos::orderBy('riesgo','asc')
+        $riesgos = Riesgos::orderBy('tipoRiesgo_id','asc')
             ->get();
         $tipoRiesgoCount = Riesgos::select(DB::raw('tipoRiesgo_id,count(tipoRiesgo_id) as TR_count'))
              ->groupBy('tipoRiesgo_id')

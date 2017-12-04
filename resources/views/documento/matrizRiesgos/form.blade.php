@@ -30,9 +30,9 @@
                                     <tr>
                                         <td>{{$count}}</td>
                                         <td>{{$riesgo->riesgo}}</td>
-                                        <td>{!! Form::select('probabilidad[]',$probabilidades,0,array('required'=>'required')) !!}</td>
-                                        <td>{!! Form::select('consecuencias[]',$consecuencias,0,array('required'=>'required')) !!}</td>
-                                        <td><label id="estimacion" class="label"></label></td>
+                                        <td>{!! Form::select('probabilidad[]',$probabilidades,0,array('required'=>'required', 'id'=>'probabilidad_'.$riesgo->id, 'riesgoId'=>$riesgo->id, 'class'=>'probabilidad')) !!}</td>
+                                        <td>{!! Form::select('consecuencia[]',$consecuencias,0,array('required'=>'required','id'=>'consecuencia_'.$riesgo->id, 'riesgoId'=>$riesgo->id, 'class'=>'consecuencia')) !!}</td>
+                                        <td><label id="estimacion_{{$riesgo->id}}" class="label label-default"></label></td>
                                         <td>{!! Form::select('control[]',$control,0,array('required'=>'required')) !!}</td>
                                     </tr>
                                     @endforeach
