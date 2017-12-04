@@ -11,6 +11,7 @@ use App\Models\Representante;
 use App\Models\Objetivo;
 use App\Models\Politica;
 use App\Models\Riesgos;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -152,8 +153,12 @@ class DocumentoController extends Controller
         return Redirect::to('/home');
     }
     public function getIdentificariesgos(){
-        $riesgos = Riesgos::orderBy('tipoRiesgo_id','asc')->get();
-        return view('documento.matrizRiesgos.form', compact('riesgos'));
+        $riesgos = Riesgos::orderBy('riesgo','asc')
+            ->get();
+        $tipoRiesgoCount = Riesgos::select(DB::raw('tipoRiesgo_id,count(tipoRiesgo_id) as TR_count'))
+             ->groupBy('tipoRiesgo_id')
+             ->get();
+        return view('documento.matrizRiesgos.form', compact('riesgos','tipoRiesgoCount'));
     }
     public function getExportplantilla($doc=0){
         $arrTamaño = [1=>"Microempresa",2=>"Pequeña empresa",3=>"Mediana empresa A",4=>"Mediana empresa B",5=>"Gran empresa"];

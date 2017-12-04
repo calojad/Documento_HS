@@ -2,23 +2,6 @@
 {{--@section('style')
     <link href="{{asset('/plugins/iCheck/square/blue.css')}}" rel="stylesheet">
 @endsection--}}
-<style>
-    input[type=number]::-webkit-outer-spin-button,
-    input[type=number]::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-    }
-    input[type=number] {
-        -moz-appearance:textfield;
-        width: 30px;
-        text-align: center;
-    }
-    tr.col-riezgos > td > input{
-        width: 30px;
-    }
-    table{
-        font-size: unset;
-    }
-</style>
 @section('content')
     <div class="container" style="width: 1300px;">
         <div class="row">
@@ -29,55 +12,28 @@
                     <div class="panel-body">
                         {!! Form::open(['url'=>'/documento/identificariesgos','method'=>'post','class'=>'form-horizontal row-border','enctype'=>'multipart/form-data']) !!}
                         <div class="col-md-12">
-                            <table class="table table-striped table-bordered table-hover table-checkable table-responsive datatable">
+                            <table class="table table-bordered">
                                 <thead>
-                                <tr>
-                                    <th rowspan="2">Tipo Riesgo</th>
-                                    <th rowspan="2">Peligro Identificativo</th>
-                                    <th colspan="3">Probabilidad</th>
-                                    <th colspan="3">Consecuencias</th>
-                                    <th colspan="5">Estimación del Riesgo</th>
-                                    <th rowspan="2">Control</th>
-                                    <th rowspan="2">Prioridad</th>
-                                    <th rowspan="2">Observaciones</th>
-                                    <th rowspan="2">Seguimiento</th>
-                                </tr>
-                                <tr>
-                                    <th>B</th>
-                                    <th>M</th>
-                                    <th>A</th>
-                                    <th>LD</th>
-                                    <th>D</th>
-                                    <th>ED</th>
-                                    <th>T</th>
-                                    <th>TO</th>
-                                    <th>M</th>
-                                    <th>I</th>
-                                    <th>IN</th>
-                                </tr>
+                                    <tr>
+                                        <th style="width: 10px;">#</th>
+                                        <th>Riesgo</th>
+                                        <th>Probabilidad</th>
+                                        <th>Consecuencia</th>
+                                        <th>Estimación</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($riesgos as $riesgo)
-                                    <tr class="col-riezgos">
-                                        <td>{{$riesgo->tipoRiesgo_id}}</td>
+                                    {{ $count=0 }}
+                                    @foreach($riesgos as $riesgo)
+                                    {{ $count++ }}
+                                    <tr>
+                                        <td>{{$count}}</td>
                                         <td>{{$riesgo->riesgo}}</td>
-                                        <td><input type="number"></td>
-                                        <td><input type="number"></td>
-                                        <td><input type="number"></td>
-                                        <td><input type="number"></td>
-                                        <td><input type="number"></td>
-                                        <td><input type="number"></td>
-                                        <td><input type="number"></td>
-                                        <td><input type="number"></td>
-                                        <td><input type="number"></td>
-                                        <td><input type="number"></td>
-                                        <td><input type="number"></td>
-                                        <td><input type="text"></td>
-                                        <td><input type="text"></td>
-                                        <td><input type="text"></td>
-                                        <td><input type="text"></td>
+                                        <td><select></select></td>
+                                        <td><select></select></td>
+                                        <td><label id="estimacion" class="label"></label></td>
                                     </tr>
-                                @endforeach
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
