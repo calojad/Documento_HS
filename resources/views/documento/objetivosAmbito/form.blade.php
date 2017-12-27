@@ -106,10 +106,10 @@
 
 @section('script')
     <!-- Quick Search Jquery -->
-    <script src="{{asset('/plugins/jQuery/jquery.quicksearch.js')}}" type="text/javascript"></script>
+    <script src="{{asset('/plugins/jquery-libs/jquery.quicksearch.js')}}" type="text/javascript"></script>
     <!-- iCheck 1.0.1 -->
     <script src="{{asset('/plugins/iCheck/icheck.min.js')}}"></script>
     <!-- Multi-Select -->
-    <script src="{{asset('plugins/jquery-multi-select/js/jquery.multi-select.js'}}"></script>
+    <script src="{{asset('plugins/jquery-multi-select/js/jquery.multi-select.js')}}"></script>
     <script src="{{asset('plugins/jquery-multi-select/js/multi-select-init.js')}}"></script>
 @endsection

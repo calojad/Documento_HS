@@ -1,5 +1,5 @@
     <!-- jQuery 2.2.4 -->
-    <script src="{{ asset('/plugins/jQuery/jQuery-3.2.1.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/plugins/jquery-libs/jquery-3.2.1.min.js') }}" type="text/javascript"></script>
     {{--<!-- Bootstrap core JavaScript -->
     <script src="{{asset('/bootstrap/js/bootstrap.min.js')}}" type="text/javascript"></script>--}}
     {{--<!-- Placed at the end of the document so the pages load faster -->

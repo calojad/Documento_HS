@@ -24,7 +24,7 @@
         <!-- DATA TABLES -->
         <link href="{{ asset('/plugins/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet" type="text/css"/>
         <!-- jQuery 2.2.4 -->
-        <script src="{{ asset('/plugins/jQuery/jQuery-3.2.1.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('/plugins/jquery-libs/jquery-3.2.1.min.js') }}" type="text/javascript"></script>
         {{--<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>--}}
         {{--iCheck--}}
         <script src="{{asset('/plugins/iCheck/icheck.min.js')}}"></script>
