@@ -144,7 +144,7 @@ class DocumentoController extends Controller
             Storage::disk('local_firma')->put($nombre,  File::get($file));
             $dataR['firma'] = 'public/firmas/'.$nombre;
         }
-//        VERIFICAR SI EXISTE UN REPRECENTANTE LEGAR YA REGISTRADO
+//        VERIFICAR SI EXISTE UN REPRECENTANTE LEGAL YA REGISTRADO
         if($reprecentante == null){
             $reprecentante = Representante::create($dataR);
         }else{
@@ -160,9 +160,9 @@ class DocumentoController extends Controller
             $dataP['politica_id'] = $poli;
             DocumentoPolitica::create($dataP);
         }
-        return Redirect::to('/home');
+        return Redirect::to('/documento/identificariesgos/1');
     }
-    public function getIdentificariesgos(){
+    public function getIdentificariesgos($alert=0){
         $riesgos = Riesgos::orderBy('riesgo','asc')
             ->get();
 //        $tipoRiesgoCount = Riesgos::select(DB::raw('tipoRiesgo_id,count(tipoRiesgo_id) as TR_count'))->groupBy('tipoRiesgo_id')->get();
@@ -170,6 +170,9 @@ class DocumentoController extends Controller
         $probabilidades=[0=>"--Seleccionar--",1=>"B-Baja",2=>"M-Media",3=>"A-Alta"];
         $consecuencias=[0=>"--Seleccionar--",1=>"LD-Ligeramente Dañino",2=>"D-Dañino",3=>"ED-Extremadamente Dañino"];
         $control=[0=>"--Seleccionar--",1=>"Medio",2=>"Fuente",3=>"Persona"];
+        if($alert == 1)
+            Alert::success()
+                 ->html('<label style="font-size: 12pt;"><samp class="glyphicon glyphicon-ok" style="padding-right: 10px;"></samp> Politicas Guardadas</label>');
         return view('documento.matrizRiesgos.form', compact('riesgos','tipoRiesgos','probabilidades','consecuencias','control'));
     }
     public function getExportplantilla($doc=0){

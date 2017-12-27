@@ -12,9 +12,10 @@
     <body>
         <!-- Menu -->
         @include('layouts.includes.menu_superior')
+
         <!-- Contenido -->
         <div id="contenedor_inicial" class="container">
-        @yield('content')
+            @yield('content')
             <hr>
         </div>
         <footer class="footer">
@@ -22,6 +23,7 @@
                 <p style="color: #00517e">&copy; 2017 - <b>Andres Loja - CAL</b> &andand;</p>
             </div>
         </footer>
+
         <!-- Scripts necessary -->
         @include('layouts.includes.scripts')
         @yield('script')

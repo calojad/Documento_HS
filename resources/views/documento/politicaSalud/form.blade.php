@@ -37,7 +37,7 @@
                                     <button type="button" class="btn btn-twitter pull-right" data-toggle="modal" data-target="#modalPoliticas"><i class="fa fa-plus-square"></i> Añadir</button>
                                 </div>
                                 <div class="col-md-9">
-                                    {!! Form::select('politicas[]',$politicas,$doc_politicas,array('multiple' => true, 'class' => 'multi-select required', 'id' => 'politicas','required'=>'required')) !!}
+                                    {!! Form::select('politicas[]',$politicas,$doc_politicas,array('multiple' => true, 'class' => 'searchable', 'id' => 'politicas','required'=>'required')) !!}
                                 </div>
                             </div>
                         </div>
@@ -85,8 +85,11 @@
 @endsection
 
 @section('script')
+    <!-- Quick Search Jquery -->
+    <script src="{{asset('/plugins/jQuery/jquery.quicksearch.js')}}" type="text/javascript"></script>
     <!-- iCheck 1.0.1 -->
     <script src="{{asset('/plugins/iCheck/icheck.min.js')}}"></script>
-    <script src="{{ asset('plugins/jquery-multi-select/js/jquery.multi-select.js')}}"></script>
-    <script src="{{ asset('plugins/jquery-multi-select/js/multi-select-init.js') }}"></script>
+    <!-- Multi-Select -->
+    <script src="{{asset('plugins/jquery-multi-select/js/jquery.multi-select.js')}}"></script>
+    <script src="{{asset('plugins/jquery-multi-select/js/multi-select-init.js')}}"></script>
 @endsection

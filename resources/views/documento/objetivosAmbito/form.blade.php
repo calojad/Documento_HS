@@ -18,7 +18,7 @@
                                     <button type="button" class="btn btn-twitter pull-right" data-toggle="modal" data-target="#modalObjetivos"><i class="fa fa-plus-square"></i> Añadir</button>
                                 </div>
                                 <div class="col-md-9">
-                                    {!! Form::select('objeto[]',$objetivos,$doc_obj,array('multiple' => true, 'class' => 'multi-select', 'id' => 'objeto', 'required'=>'required')) !!}
+                                    {!! Form::select('objeto[]',$objetivos,$doc_obj,array('multiple' => true, 'class' => 'searchable', 'id' => 'objeto', 'required'=>'required')) !!}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -27,7 +27,7 @@
                                     <button type="button" class="btn btn-twitter pull-right" data-toggle="modal" data-target="#modalAmbitos"><i class="fa fa-plus-square"></i> Añadir</button>
                                 </div>
                                 <div class="col-md-9">
-                                    {!! Form::select('ambito[]',$ambitos,$doc_amb,array('multiple' => true, 'class' => 'multi-select', 'id' => 'ambito','required'=>'required')) !!}
+                                    {!! Form::select('ambito[]',$ambitos,$doc_amb,array('multiple' => true, 'class' => 'searchable', 'id' => 'ambito','required'=>'required')) !!}
                                 </div>
                             </div>
                         </div>
@@ -105,6 +105,11 @@
 @endsection
 
 @section('script')
+    <!-- Quick Search Jquery -->
+    <script src="{{asset('/plugins/jQuery/jquery.quicksearch.js')}}" type="text/javascript"></script>
     <!-- iCheck 1.0.1 -->
     <script src="{{asset('/plugins/iCheck/icheck.min.js')}}"></script>
+    <!-- Multi-Select -->
+    <script src="{{asset('plugins/jquery-multi-select/js/jquery.multi-select.js'}}"></script>
+    <script src="{{asset('plugins/jquery-multi-select/js/multi-select-init.js')}}"></script>
 @endsection
