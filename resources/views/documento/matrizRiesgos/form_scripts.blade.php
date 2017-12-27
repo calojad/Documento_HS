@@ -1,5 +1,7 @@
 <script type="text/javascript">
-	$(function () {
+    var contenerdor_layout = $('#contenedor_inicial');
+    contenerdor_layout.removeClass('container');
+    $(function () {
         $('.table').DataTable({
             "paging": true,
             "aaSorting": [[ 1, 'Desc' ]],

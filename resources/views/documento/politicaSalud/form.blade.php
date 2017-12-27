@@ -10,12 +10,25 @@
                 <div class="panel panel-default">
                     <div class="panel-heading"><i class="fa fa-check-circle"></i> POLÍTICA DE SEGURIDAD Y SALUD EN EL TRABAJO</div>
                     <div class="panel-body">
-                        {!! Form::open(['url'=>'documento/politicasalud', 'method'=>'post','class'=>'form-horizontal row-border']) !!}
+                        {!! Form::open(['url'=>'documento/politicasalud', 'method'=>'post','class'=>'form-horizontal row-border', 'enctype'=>'multipart/form-data']) !!}
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Reprecentante legal: </label>
                                 <div class="col-md-9">
                                     <input name="reprecentante" class="form-control" type="text" required placeholder="Nombres y Apellidos" value="{{$reprecentante != null ?$reprecentante->nombre:old('reprecentante')}}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Cedula: </label>
+                                <div class="col-md-9">
+                                    <input name="cedula" class="form-control" type="text" required value="{{$reprecentante != null ?$reprecentante->cedula:old('reprecentante')}}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Firma: </label>
+                                <div class="col-md-9">
+                                    <img style="margin: 1em 0" width="100px" src="{{Storage::url($reprecentante->firma)}}">
+                                    <input name="firma" class="form-control" type="file" style="height: inherit;">
                                 </div>
                             </div>
                             <div class="form-group">

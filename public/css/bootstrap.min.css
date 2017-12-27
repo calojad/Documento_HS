@@ -4653,6 +4653,9 @@ a.list-group-item-danger.active,a.list-group-item-danger.active:focus,a.list-gro
 	-webkit-box-shadow:0 1px 1px rgba(0,0,0,.05);
 	box-shadow:0 1px 1px rgba(0,0,0,.05)
 }
+.panel-bot-0{
+    margin-bottom: 0px;
+}
 .panel-body {
 	padding:15px
 }

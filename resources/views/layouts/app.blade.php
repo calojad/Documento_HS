@@ -13,13 +13,15 @@
         <!-- Menu -->
         @include('layouts.includes.menu_superior')
         <!-- Contenido -->
-        <div class="container">
+        <div id="contenedor_inicial" class="container">
         @yield('content')
             <hr>
-            <div class="row col-md-12" align="center">
+        </div>
+        <footer class="footer">
+            <div class="col-md-12" align="center">
                 <p style="color: #00517e">&copy; 2017 - <b>Andres Loja - CAL</b> &andand;</p>
             </div>
-        </div>
+        </footer>
         <!-- Scripts necessary -->
         @include('layouts.includes.scripts')
         @yield('script')

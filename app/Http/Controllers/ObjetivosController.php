@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Objetivo;
+use App\Models\Objetivo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;

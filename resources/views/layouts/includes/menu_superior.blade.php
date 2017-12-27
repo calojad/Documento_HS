@@ -37,6 +37,9 @@
 
                         <ul class="dropdown-menu" role="menu">
                             <li>
+                                <a href="{{ URL::to('/mantenimiento/ambitos') }}"><i class="fa fa-wrench"></i> Mantenimientos</a>
+                            </li>
+                            <li>
                                 <a href="{{ URL::to('/home') }}"><i class="fa fa-file"></i> Documento</a>
                             </li>
                             <li>

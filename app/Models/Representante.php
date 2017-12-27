@@ -11,5 +11,9 @@ class Representante extends Model
     const UPDATED_AT = 'updated_At';
     public $timestamps = true;
 
-    protected $fillable = ['nombre','empresa_id'];
+    protected $fillable = ['nombre','empresa_id','cedula','firma'];
+
+    public function empresa(){
+        return $this->belongsto('App\Models\Empresa','empresa_id');
+    }
 }

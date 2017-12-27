@@ -47,6 +47,10 @@ return [
             'driver' => 'local',
             'root' => storage_path('app/public/logos_empresas'),
         ],
+        'local_firma' => [
+             'driver' => 'local',
+             'root' => storage_path('app/public/firmas'),
+        ],
 
         'public' => [
             'driver' => 'local',
