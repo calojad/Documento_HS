@@ -4,11 +4,11 @@
     <script src="{{asset('/bootstrap/js/bootstrap.min.js')}}" type="text/javascript"></script>--}}
     {{--<!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>--}}
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script> window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <!-- Script App -->
     <script src="{{asset('/js/app.js')}}" type="text/javascript"></script>
-    {{--<!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>--}}
+    <!-- AdminLTE App -->
+    <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
     <!-- DataTables -->
     <script src="{{ asset('/plugins/dataTables/jquery.dataTables.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('/plugins/dataTables/dataTables.bootstrap.min.js') }}" type="text/javascript"></script>

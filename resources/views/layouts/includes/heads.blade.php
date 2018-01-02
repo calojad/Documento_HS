@@ -1,17 +1,14 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!-- Tell the browser to be responsive to screen width -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <meta name="description" content="">
         <meta name="author" content="">
+        <title>Higiene y Seguridad</title>
         <link rel="icon" href="../../favicon.ico">
-        <!-- Latest compiled and minified CSS -->
-        {{--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">--}}
-        <!-- Optional theme -->
-        {{--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">--}}
         {{--Bootstrap--}}
         <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-        {{--<link href="{{ asset('/css/app.css') }}" rel="stylesheet" type="text/css" />--}}
         <!-- AdminLTE Skins. Choose a skin from the css/skins
         folder instead of downloading all of them to reduce the load. -->
         <link href="{{ asset('/dist/css/skins/_all-skins.min.css') }}" rel="stylesheet" type="text/css" />
@@ -19,6 +16,10 @@
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <!-- Theme style -->
         <link href="{{ asset('/dist/css/AdminLTE.min.css') }}" rel="stylesheet" type="text/css" />
+        <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
+        page. However, you can choose any other skin. Make sure you
+        apply the skin class to the body tag so the changes take effect. -->
+        <link rel="stylesheet" href="{{asset('/dist/css/skins/skin-blue.min.css')}}">
         {{--Multi Select--}}
         <link href="{{ asset('plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" />
         <!-- DATA TABLES -->

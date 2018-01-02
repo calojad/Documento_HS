@@ -5,29 +5,33 @@
         @include('layouts.includes.heads')
         <!-- Icono y Titulo de la Pestaña -->
         <link rel="shortcut icon" href="{{asset('images/icons/ico.ico')}}">
-        <title>Higiene y Seguridad</title>
     @yield('style')
     </head>
 
-    <body class="skin-blue wysihtml5-supported">
-        <div class="wraper">
-        @include('layouts.includes.menu_superior')
+    <body class="hold-transition skin-blue sidebar-mini">
+        <div class="wrapper">
+        @include('layouts.includes.main_header')
         @include('layouts.includes.sidebar')
         <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1> </h1>
+                </section>
                 <!-- Main content -->
-                <section class="content" class="sidebar-toggle" >
-                    <div class="col-md-12" >
+                <section class="content container-fluid">
+                    <div class="row">
                         @yield('content')
                     </div>
                 </section><!-- /.content -->
             </div><!-- /.content-wrapper -->
-
+            <!-- Main Footer -->
             <footer class="main-footer">
-                <div class="col-md-12" align="center">
-                    <p style="color: #00517e">&copy; 2017 - <b>Andres Loja - CAL</b> &andand;</p>
+                <div class="pull-right hidden-xs">
+                    <b>Version</b> 1.0
                 </div>
-            </footer>
+                <strong>Copyright &copy; 2017 {{--<a href="https://adminlte.io">Almsaeed Studio</a>--}}</strong> Andres Loja
+            </footer>                                   
         </div>
 
         <!-- Scripts necessary -->

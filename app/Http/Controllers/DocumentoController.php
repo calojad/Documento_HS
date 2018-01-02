@@ -11,6 +11,7 @@ use App\Models\Representante;
 use App\Models\Objetivo;
 use App\Models\Politica;
 use App\Models\Riesgos;
+use App\Models\RiesgosEmpresa;
 use App\Models\TipoRiesgos;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -67,9 +68,8 @@ class DocumentoController extends Controller
         $direccion['sucursal'] = 1;
 //        VERIFICAR SI EXISTEN DIRECCIONES DE LA EMPRESA
         $direc = EmpresaDireccion::where('empresa_id',$empresa->id)->get();
-        if(count($direc) > 0){
+        if(count($direc) > 0)
             foreach ($direc as $dir){ $dir->delete(); }
-        }
         EmpresaDireccion::create($direccion);
         if($data['centros'] > 1){
             for ($i=2;$i<=$data['centros'];$i++){
@@ -101,17 +101,17 @@ class DocumentoController extends Controller
         $data_amb = Input::get('ambito');
         $data['documento_id'] = Session::get('documentoId');
         $documento = DocumentoObjetivo::where('documento_id',$data['documento_id'])->get();
-        if(count($documento) > 0){
+//        VERIFICAR SI YA EXISTEN OBJETIVOS EN EL DOCUMENTO
+        if(count($documento) > 0)
             foreach ($documento as $doc){ $doc->delete(); }
-        }
         foreach($data_obj as $obj){
             $data['objetivo_id'] = $obj;
             DocumentoObjetivo::create($data);
         }
         $documento = DocumentoAmbito::where('documento_id',$data['documento_id'])->get();
-        if(count($documento) > 0){
+//        VERIFICAR SI EXISTEN AMBITOS EN EL DOCUMENTO
+        if(count($documento) > 0)
             foreach ($documento as $doc){ $doc->delete(); }
-        }
         foreach($data_amb as $amb){
             $data['ambito_id'] = $amb;
             DocumentoAmbito::create($data);
@@ -153,9 +153,8 @@ class DocumentoController extends Controller
 //        VERIFICAR LAS POLITICAS
         $politicas = DocumentoPolitica::where('documento_id',$dataP['documento_id'])
              ->get();
-        if(count($politicas) > 0){
+        if(count($politicas) > 0)
             foreach ($politicas as $poli){ $poli->delete(); }
-        }
         foreach($data_poli as $poli){
             $dataP['politica_id'] = $poli;
             DocumentoPolitica::create($dataP);
@@ -165,7 +164,8 @@ class DocumentoController extends Controller
     public function getIdentificariesgos($alert=0){
         $riesgos = Riesgos::orderBy('riesgo','asc')
             ->get();
-//        $tipoRiesgoCount = Riesgos::select(DB::raw('tipoRiesgo_id,count(tipoRiesgo_id) as TR_count'))->groupBy('tipoRiesgo_id')->get();
+        $riesgosEmp = RiesgosEmpresa::where('empresa_id',Session::get('empresaId'))
+             ->get();
         $tipoRiesgos = TipoRiesgos::all();
         $probabilidades=[0=>"--Seleccionar--",1=>"B-Baja",2=>"M-Media",3=>"A-Alta"];
         $consecuencias=[0=>"--Seleccionar--",1=>"LD-Ligeramente Dañino",2=>"D-Dañino",3=>"ED-Extremadamente Dañino"];
@@ -173,7 +173,22 @@ class DocumentoController extends Controller
         if($alert == 1)
             Alert::success()
                  ->html('<label style="font-size: 12pt;"><samp class="glyphicon glyphicon-ok" style="padding-right: 10px;"></samp> Politicas Guardadas</label>');
-        return view('documento.matrizRiesgos.form', compact('riesgos','tipoRiesgos','probabilidades','consecuencias','control'));
+        return view('documento.matrizRiesgos.form_identi', compact('riesgos','tipoRiesgos','probabilidades','consecuencias','control','riesgosEmp'));
+    }
+    public function postIdentificariesgos(){
+        $data['empresa_id'] = Session::get('empresaId');
+        $inputRiesgos = Input::get('riesgos');
+        $riesgoEmpresa = RiesgosEmpresa::where('empresa_id',$data['empresa_id'])
+             ->get();
+        if(count($riesgoEmpresa) > 0)
+            foreach ($riesgoEmpresa as $rEmp){ $rEmp->delete(); }
+        foreach ($inputRiesgos as $irgs){
+            $data['riesgo_id'] = $irgs;
+            RiesgosEmpresa::create($data);
+        }
+        $documento = Documento::where('empresa_id',$data['empresa_id'])->first();
+        $documento->update(['estado' => 2]);
+        return Redirect::to('/home');
     }
     public function getExportplantilla($doc=0){
         $arrTamaño = [1=>"Microempresa",2=>"Pequeña empresa",3=>"Mediana empresa A",4=>"Mediana empresa B",5=>"Gran empresa"];

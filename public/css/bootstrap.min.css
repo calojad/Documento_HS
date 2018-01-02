@@ -3894,7 +3894,7 @@ select[multiple].input-group-sm>.form-control,select[multiple].input-group-sm>.i
 }
 @media (max-width:767px) {
 	.navbar-default .navbar-nav .open .dropdown-menu>li>a {
-		color:#777
+		color:white;
 	}
 	.navbar-default .navbar-nav .open .dropdown-menu>li>a:focus,.navbar-default .navbar-nav .open .dropdown-menu>li>a:hover {
 		color:#333;

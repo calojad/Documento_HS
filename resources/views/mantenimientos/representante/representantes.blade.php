@@ -12,7 +12,7 @@
                 <a class="btn btn-primary pull-right" title="Crear Nuevo Representante"><i class="fa fa-plus-square"></i> Crear</a>
             </div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-12 box-body table-responsive no-padding">
             <table class="table table-striped table-bordered table-hover table-checkable table-responsive datatable">
                 <thead>
                 <tr>

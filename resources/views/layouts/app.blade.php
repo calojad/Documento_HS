@@ -5,7 +5,6 @@
         @include('layouts.includes.heads')
         <!-- Icono y Titulo de la Pestaña -->
         <link rel="shortcut icon" href="{{asset('images/icons/ico.ico')}}">
-        <title>Higiene y Seguridad</title>
 @yield('style')
     </head>
 

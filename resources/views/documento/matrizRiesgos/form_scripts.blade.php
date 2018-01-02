@@ -2,14 +2,24 @@
     var contenerdor_layout = $('#contenedor_inicial');
     contenerdor_layout.removeClass('container');
     $(function () {
+        var riesgosEmpresa = JSON.parse($('#riesgosEmpresa').val());
+        $.each(riesgosEmpresa,function (key, value) {
+            $('#'+value.riesgo_id).attr('checked',true);
+        });
+    });
+    $(function () {
         $('.table').DataTable({
-            "paging": true,
+            "paging": false,
             "aaSorting": [[ 1, 'Desc' ]],
             "lengthChange": true,
             "searching": true,
             "ordering": false,
             "autoWidth": false
         });
+    });
+    $(document).keyup(function(event){
+        if(event.which === 116)
+            window.location.href = "/documento/identificariesgos";
     });
     $(document).on('change','.probabilidad',function(){
         var estimacion = $('#estimacion_'+$(this).attr('riesgoId'));

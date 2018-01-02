@@ -19,7 +19,7 @@
                     <div class="col-md-12">
                         <a class="btn btn-primary" href="{{URL::to('/documento/datosgenerales')}}"><i class="fa fa-plus-square"></i> Nuevo</a>
                     </div>
-                    <div class="col-md-12 h5">
+                    <div class="col-md-12 h5 box-body table-responsive no-padding">
                         <table class="table table-striped table-bordered table-hover table-checkable table-responsive datatable">
                             <thead>
                                 <tr>

@@ -1,27 +1,21 @@
-<nav class="navbar navbar-default navbar-static-top">
-    <div class="container">
-        <div class="navbar-header">
+<header class="main-header">
 
-            <!-- Collapsed Hamburger -->
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                <span class="sr-only">Toggle Navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
+    <!-- Logo -->
+    <a href="{{ url('/') }}" class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini"><b>D</b>HS</span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg"><b>Higiene </b>y Salud</span>
+    </a>
 
-            <!-- Branding Image -->
-            <a class="navbar-brand" href="{{ url('/') }}">
-                {{ config('app.name', 'Laravel') }}
-            </a>
-        </div>
-        <div class="collapse navbar-collapse" id="app-navbar-collapse" style="color: white;">
-            <!-- Left Side Of Navbar -->
-            <ul class="nav navbar-nav">
-
-            </ul>
-
-            <!-- Right Side Of Navbar -->
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top" role="navigation">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+            <span class="sr-only">Toggle navigation</span>
+        </a>
+        <!-- Navbar Right Menu -->
+        <div class="navbar-custom-menu" style="margin-right: 10%;">
             <ul class="nav navbar-nav navbar-right">
                 <!-- Authentication Links -->
                 @guest
@@ -54,5 +48,5 @@
                 @endguest
             </ul>
         </div>
-    </div>
-</nav>
+    </nav>
+</header>

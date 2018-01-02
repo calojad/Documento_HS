@@ -1,8 +1,9 @@
 <aside class="main-sidebar">
     <section class="sidebar">
-        <ul class="sidebar-menu">
+        <!-- Sidebar Menu -->
+        <ul class="sidebar-menu" data-widget="tree">
             <li class="header">TABLAS</li>
-            <li>
+            <li class="active">
                 <a href="{{URL::to('/mantenimiento/ambitos')}}">
                     <i class="fa fa-group"></i> <span>Ambitos</span>
                 </a>
