@@ -12,7 +12,7 @@
                 </div>
                 <div class="panel-body">
                     <input id="riesgosEmpresa" type="hidden" value="{{$riesgosEmp}}">
-                    {!! Form::open(['url'=>'/documento/identificariesgos','method'=>'post','class'=>'form-horizontal row-border']) !!}
+                    {!! Form::open(['url'=>'/documento/identificariesgos','method'=>'post','id'=>'formIdentRiesgos','class'=>'form-horizontal row-border']) !!}
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
                             @foreach($tipoRiesgos as $triesgo)
@@ -30,7 +30,7 @@
                             @else
                             <div class="tab-pane" id="tab_{{$tr->id}}" style="overflow-x: auto;">
                             @endif
-                                <div class="col-md-12">
+                                <div class="col-md-12 riesgos">
                                     <table class="table table-striped table-bordered table-hover table-checkable table-responsive datatable">
                                         <thead>
                                         <tr>
@@ -49,7 +49,7 @@
                                                 <td>{{$count}}</td>
                                                 <td>{{$riesgo->riesgo}}</td>
                                                 <td>
-                                                    <input id="{{$riesgo->id}}" type="checkbox" name="riesgos[]" value="{{$riesgo->id}}">
+                                                    <input id="{{$riesgo->id}}" name="riesgos[]" type="checkbox" value="{{$riesgo->id}}">
                                                 </td>
                                                 <td><a><i class="fa fa-edit"></i></a>
                                                 </td>
@@ -65,7 +65,7 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <button class="btn btn-primary pull-right">Guardar</button>
+                    <a id="btnGuardarRiesgos" class="btn btn-primary pull-right">Guardar</a>
                 </div>
                 {!! Form::close() !!}
             </div>

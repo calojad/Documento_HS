@@ -33,6 +33,14 @@
         var prob = $('#probabilidad_'+$(this).attr('riesgoId'));
         obtEstimacion(prob,cons,estimacion);
     });
+    $(document).on('click','#btnGuardarRiesgos',function () {
+        var numSeleccionados = $(".riesgos input:checked").length;
+        if(numSeleccionados === 0){
+            alert('Debe seleccionar por lo menos un Riesgo');
+        }else{
+            $('#formIdentRiesgos').submit();
+        }
+    });
     function obtEstimacion(probabilidad, consecuencia, estimacion){
         if(probabilidad.val() > 0 && consecuencia.val() > 0){
             var suma = parseInt(probabilidad.val()) + parseInt(consecuencia.val());
