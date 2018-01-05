@@ -203,10 +203,10 @@ class DocumentoController extends Controller
         $poblacion = $empresa->hombres + $empresa->mujeres + $empresa->menores + $empresa->vulnerables;
 
 //      CREA INSTANCIA DE PLANTILLA
-        $templateWord = new TemplateProcessor(asset('/storage/plantilla_Word/REG_HIG_Y_SEGURIDAD_MED.docx'));
+        $templateWord = new TemplateProcessor(asset('/storage/plantilla_Word/REG_HIG_Y_SEGURIDAD.docx'));
 
 //      VARIABLES SEGUN N° TRABAJADORES
-        if($poblacion >= 10)
+//        if($poblacion >= 10)
 //      INGRESAR VALORES DE LAS VARIABLES
 //        LOGO
         if($empresa->logo != ''){
