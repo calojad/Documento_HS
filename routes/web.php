@@ -21,4 +21,5 @@ Route::group(['middleware' => 'auth'], function () {
     AdvancedRoute::controller('/ambitos','AmbitosController');
     AdvancedRoute::controller('/politica','PoliticaController');
     AdvancedRoute::controller('/mantenimiento','MantenimientoController');
+    AdvancedRoute::controller('/riesgo','RiesgosController');
 });

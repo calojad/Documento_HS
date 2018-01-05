@@ -41,6 +41,15 @@
             $('#formIdentRiesgos').submit();
         }
     });
+    $(document).on('click','#btnEditarRiesgo',function () {
+        var riesgoId = $(this).attr('riesgoId');
+        var url = '{{URL::to('/riesgo/riesgoeditar')}}/'+riesgoId;
+        $.get(url,function (json) {
+            $('#modalEditarRiesgo').val(json.riesgo);
+            $('#modalEditarDescripcion').val(json.descripcion);
+            $('#modalEditarId').val(json.id);
+        },'json');
+    });
     function obtEstimacion(probabilidad, consecuencia, estimacion){
         if(probabilidad.val() > 0 && consecuencia.val() > 0){
             var suma = parseInt(probabilidad.val()) + parseInt(consecuencia.val());

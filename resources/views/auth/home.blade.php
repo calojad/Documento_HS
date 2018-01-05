@@ -44,7 +44,7 @@
                                             @endif
                                         </td>
                                         <td style="width: 100px">
-                                            <a style="margin: 0 1em" title="Ver" href="{{URL::to('documento/datosgenerales/').'/'.$documento->id}}"><i class="fa fa-eye"></i></a>
+                                            <a style="margin: 0 1em" title="Ver" href="{{URL::to('documento/datosgenerales/').'/'.$documento->id}}"><i class="fa fa-edit"></i></a>
                                             <a style="margin: 0 1em" title="Descargar" href="{{URL::to('documento/exportplantilla/').'/'.$documento->id}}"><i class="fa fa-download"></i></a>
                                         </td>
                                     </tr>

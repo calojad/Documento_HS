@@ -209,7 +209,12 @@ class DocumentoController extends Controller
         if($poblacion >= 10)
 //      INGRESAR VALORES DE LAS VARIABLES
 //        LOGO
-        $templateWord->setImg('logo',['src'=>storage_path('app/'.$empresa->logo),'swh'=>100]);
+        if($empresa->logo != ''){
+            $templateWord->setImg('logo',['src'=>storage_path('app/'.$empresa->logo),'swh'=>100]);
+        }else{
+            $templateWord->setValue('logo','');
+        }
+
 //        DATOS GENERALES
         $templateWord->setValue('nombreEmpresa',$empresa->nombre);
         $templateWord->setValue('ruc',$empresa->ruc);
@@ -254,7 +259,10 @@ class DocumentoController extends Controller
         }
         $templateWord->setValue('representante',$reprecentante->nombre);
 //        FIRMA
-        $templateWord->setImg('firma_rep',['src'=>storage_path('app/'.$reprecentante->firma),'swh'=>150]);
+        if($reprecentante->firma != '')
+            $templateWord->setImg('firma_rep',['src'=>storage_path('app/'.$reprecentante->firma),'swh'=>150]);
+        else
+            $templateWord->setValue('firma_rep','');
 
 //      GUARDAR DOCUMENTO
         $templateWord->saveAs($documento->titulo.'.docx');
