@@ -9,7 +9,7 @@
         </div>
         <div class="panel-body">
             <div class="col-md-12">
-                <a class="btn btn-primary pull-right" title="Crear Nuevo Tipo"><i class="fa fa-plus-square"></i> Crear</a>
+                <a href="{{URL::to('/mantenimiento/creatiporiesgo')}}" class="btn btn-primary pull-right" title="Crear Nuevo Tipo"><i class="fa fa-plus-square"></i> Crear</a>
             </div>
         </div>
         <div class="col-md-12 box-body table-responsive no-padding">
@@ -27,8 +27,8 @@
                         <td>{{$riesgo->id}}</td>
                         <td>{{$riesgo->riesgo}}</td>
                         <td>
-                            <a title="EDITAR"><i class="fa fa-edit"></i></a>
-                            <a title="ELIMINAR"><i class="fa fa-trash"></i></a>
+                            <a href="{{URL::to('/mantenimiento/editartiporiesgo/').'/'.$riesgo->id}}" title="EDITAR"><i class="fa fa-edit"></i></a>
+                            <a href="{{URL::to('/mantenimiento/eliminartiporiesgo/').'/'.$riesgo->id}}" title="ELIMINAR"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
                 @endforeach

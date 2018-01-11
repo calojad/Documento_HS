@@ -38,11 +38,11 @@
                     <i class="fa fa-warning"></i> <span>Riesgos</span>
                 </a>
             </li>
-            {{--<li>
+            <li>
                 <a href="{{URL::to('/mantenimiento/tiporiesgo')}}">
                     <i class="fa fa-list-ul"></i> <span>Tipo de Riesgos</span>
                 </a>
-            </li>--}}
+            </li>
             {{--<li>
                 <a href="{{URL::to('/mantenimiento/usuarios')}}">
                     <i class="fa fa-user"></i> <span>Usuarios</span>

@@ -148,7 +148,7 @@ class MantenimientoController extends Controller
         $data = Input::all();
         $tiporiesgo = TipoRiesgos::find($id);
         $tiporiesgo->update($data);
-        return Redirect::to('mantenimiento/tiporiesgos');
+        return Redirect::to('mantenimiento/tiporiesgo');
     }
     public function postEditarusuario($id){
         $data = Input::all();
@@ -183,6 +183,11 @@ class MantenimientoController extends Controller
         $titulo = 'CREAR RIESGO';
         return view('mantenimientos.riesgo.form', compact('riesgo','titulo','tipoRiesgos'));
     }
+    public function getCreatiporiesgo(){
+        $tipoRiesgo = new TipoRiesgos();
+        $titulo = 'CREAR CATEGORIA DE RIESGO';
+        return view('mantenimientos.tipoRiesgo.form', compact('tipoRiesgo','titulo'));
+    }
     //    CREAR POST'S===============================================
     public function postCrearambito(){
         $data = Input::all();
@@ -214,6 +219,12 @@ class MantenimientoController extends Controller
 
         return Redirect::to('mantenimiento/riesgos');
     }
+    public function postCreatiporiesgo(){
+        $data = Input::all();
+        TipoRiesgos::create($data);
+
+        return Redirect::to('mantenimiento/tiporiesgo');
+    }
 //    ELIMINAR===============================================
     public function getEliminarambito($id){
         $ambito = Ambito::find($id);
@@ -244,5 +255,11 @@ class MantenimientoController extends Controller
         $riesgo->delete();
 
         return Redirect::to('mantenimiento/riesgos');
+    }
+    public function getEliminartiporiesgo($id){
+        $tiporiesgo = TipoRiesgos::find($id);
+        $tiporiesgo->delete();
+
+        return Redirect::to('mantenimiento/tiporiesgo');
     }
 }
