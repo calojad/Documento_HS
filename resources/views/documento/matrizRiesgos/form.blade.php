@@ -63,12 +63,6 @@
                         </div>
                     </div>
                 </div>
-                {{--{!! Form::open(['url'=>'/documento/identificariesgos','method'=>'post','class'=>'form-horizontal row-border','enctype'=>'multipart/form-data']) !!}
-                        <div class="col-md-12">
-                            <button class="btn btn-primary pull-right" type="submit"><i class="fa fa-arrow-right"></i>
-                                Siguiente</button>
-                        </div>
-                    {!! Form::close() !!}--}}
             </div>
         </div>
     </div>

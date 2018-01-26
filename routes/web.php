@@ -14,7 +14,8 @@
 Route::get('/', function () {return view('welcome.welcome');});
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/home/{register}', 'HomeController@index')->name('home');
+Route::get('/home/{registrado}', 'HomeController@index')->name('home');
+Route::get('/home/{finalizado}/{documento}', 'HomeController@index')->name('home');
 Route::group(['middleware' => 'auth'], function () {
     AdvancedRoute::controller('/documento','DocumentoController');
     AdvancedRoute::controller('/objetivos','ObjetivosController');

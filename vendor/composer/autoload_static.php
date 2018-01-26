@@ -362,6 +362,7 @@ class ComposerStaticInitb364d0e76175b98acab8f02152282d5c
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Models\\Ambito' => __DIR__ . '/../..' . '/app/Models/Ambito.php',
+        'App\\Models\\Articulos' => __DIR__ . '/../..' . '/app/Models/Articulos.php',
         'App\\Models\\Documento' => __DIR__ . '/../..' . '/app/Models/Documento.php',
         'App\\Models\\DocumentoAmbito' => __DIR__ . '/../..' . '/app/Models/DocumentoAmbito.php',
         'App\\Models\\DocumentoObjetivo' => __DIR__ . '/../..' . '/app/Models/DocumentoObjetivo.php',

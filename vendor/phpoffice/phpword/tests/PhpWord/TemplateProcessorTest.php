@@ -220,6 +220,14 @@ final class TemplateProcessorTest extends \PHPUnit_Framework_TestCase
         $templateProcessor->deleteBlock('DELETEME');
         $templateProcessor->saveAs($docName);
         $docFound = file_exists($docName);
+        if($docFound){
+            $templateProcessorNEWFILE = new TemplateProcessor($docName);
+            $this->assertEquals(
+                 [],
+                 $templateProcessorNEWFILE->getVariables()
+            );
+
+        }
         unlink($docName);
         $this->assertTrue($docFound);
     }

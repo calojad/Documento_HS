@@ -24,11 +24,16 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($alert=0)
+    public function index($alert=0,$doc=0)
     {
-        if($alert != 0)
-            Alert::message('You are logged in!','info');
-        $documentos = Documento::take(10)->get();
+        if($alert == 1)
+            Alert::success()
+                 ->html('<label style="font-size: 12pt;"><samp class="glyphicon glyphicon-ok" style="padding-right: 10px;"></samp> Usuario Creado Exitosamente</label>');
+        if($alert == 2){
+            Alert::success()
+                 ->html('<label style="font-size: 12pt;"><samp class="glyphicon glyphicon-ok" style="padding-right: 10px;"></samp> Documento <b style="color: #9f191f">"'.$doc.'"</b> Creado Exitosamente</label>');
+        }
+        $documentos = Documento::where('estado','<>',0)->get();
         return view('auth.home',compact('documentos'));
     }
 }

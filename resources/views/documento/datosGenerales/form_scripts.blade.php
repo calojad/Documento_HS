@@ -47,10 +47,10 @@
         aux_contador++;
         divDireccSucur.append('' +
             '<div class="form-group">' +
-            '<label class="col-md-4 control-label">Sucursal:</label>' +
-            '<div class="col-md-8">' +
-            '<input name="direccion_sucursal_'+aux_contador+'" class="form-control" required type="text" placeholder="Dirección">' +
-            '</div>' +
+                '<label class="col-md-4 control-label">Sucursal:</label>' +
+                '<div class="col-md-8">' +
+                    '<input name="direccion_sucursal_'+aux_contador+'" class="form-control" required type="text" placeholder="Dirección">' +
+                '</div>' +
             '</div>'
         );
     }

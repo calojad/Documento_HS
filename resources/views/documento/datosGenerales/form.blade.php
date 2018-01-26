@@ -111,25 +111,25 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">N° Hombre: </label>
                                 <div class="col-md-4">
-                                    <input name="hombres" class="form-control" type="number" value="{{$empresa->hombres >= 0 ?$empresa->hombres:old('hombres')}}">
+                                    <input name="hombres" class="form-control" type="number" value="{{$empresa->hombres != null ?$empresa->hombres:0}}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">N° Mujeres: </label>
                                 <div class="col-md-4">
-                                    <input name="mujeres" class="form-control" required type="number" value="{{$empresa->mujeres >= 0 ?$empresa->mujeres:old('mujeres')}}">
+                                    <input name="mujeres" class="form-control" required type="number" value="{{$empresa->mujeres != null ?$empresa->mujeres:0}}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">N° Menores: </label>
                                 <div class="col-md-4">
-                                    <input name="menores" class="form-control" required type="number" value="{{$empresa->menores >= 0 ?$empresa->menores:old('menores')}}">
+                                    <input name="menores" class="form-control" required type="number" value="{{$empresa->menores != null ?$empresa->menores :0}}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">N° Personal Vulnerables: </label>
                                 <div class="col-md-4">
-                                    <input name="vulnerables" class="form-control" required type="number" value="{{$empresa->vulnerables >= 0 ?$empresa->vulnerables:old('vulnerables')}}">
+                                    <input name="vulnerables" class="form-control" required type="number" value="{{$empresa->vulnerables != null ?$empresa->vulnerables:0}}">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -183,7 +183,7 @@
                             <div id="divDireccionSucursal" class="col-md-12">
                                 {{--INPUTS CON DIRECCION DE SUCURSALES AGREGADOS CON JQUERY--}}
                                 @if($empresa->centros > 1)
-                                    @foreach($direcciones as $direccion)
+                                    @foreach($Sucdirecciones as $direccion)
                                         <div class="form-group">
                                             <label class="control-label col-md-4">Sucursal: </label>
                                             <div class="col-md-8">

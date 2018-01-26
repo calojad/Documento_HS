@@ -3,11 +3,16 @@
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">TABLAS</li>
-            <li class="active">
+            <li>
                 <a href="{{URL::to('/mantenimiento/ambitos')}}">
                     <i class="fa fa-group"></i> <span>Ambitos</span>
                 </a>
             </li>
+            {{--<li>
+                <a href="{{URL::to('/mantenimiento/articulos')}}">
+                    <i class="fa fa-list-ol"></i> <span>Articulos</span>
+                </a>
+            </li>--}}
             {{--<li>
                 <a href="{{URL::to('/mantenimiento/empresas')}}">
                     <i class="fa fa-building"></i> <span>Empresas</span>

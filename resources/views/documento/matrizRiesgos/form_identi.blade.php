@@ -66,7 +66,7 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <a id="btnGuardarRiesgos" class="btn btn-primary pull-right">Guardar</a>
+                    <a id="btnGuardarRiesgos" class="btn btn-primary pull-right"><i class="fa fa-save"></i> Guardar</a>
                 </div>
                 {!! Form::close() !!}
             </div>
@@ -81,7 +81,7 @@
                 </div>
                 {!! Form::open(['url'=>'riesgo/riesgoeditar', 'method'=>'post']) !!}
                 <input id="modalEditarId" name="modalRiesgoId" type="hidden">
-                <div class="modal-body row form-horizontal">
+                <div class="modal-body form-horizontal">
                     <div class="form-group">
                         <label class="control-label col-md-3">Riesgo:</label>
                         <div class="col-md-8">

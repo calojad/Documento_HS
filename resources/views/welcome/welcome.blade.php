@@ -47,7 +47,7 @@
         <div class="flex-center position-ref full-height">
             <div class="content">
                 <div class="title m-b-md" align="center">
-                    <h1>ESTRUCTURA DEL REGLAMENTO INTERNO De<br>Higiene y Seguridad</h1>
+                    <h1>REGLAMENTO INTERNO DE<br>HIGIENE y SEGURIDAD</h1>
                 </div>
                 {{--<div class="links">
                     <a href="https://laravel.com/docs">Documentation</a>

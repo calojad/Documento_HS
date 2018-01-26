@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ambito;
+use App\Models\Articulos;
 use App\Models\DocumentoAmbito;
 use App\Models\DocumentoObjetivo;
 use App\Models\DocumentoPolitica;
@@ -13,6 +14,7 @@ use App\Models\Politica;
 use App\Models\Riesgos;
 use App\Models\RiesgosEmpresa;
 use App\Models\TipoRiesgos;
+use App\Helpers\HTMLtoOpenXML;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
@@ -32,10 +34,10 @@ class DocumentoController extends Controller
         $empresa = new Empresa();
         if($documento != null)
             $empresa = Empresa::find($documento->empresa_id);
-        $direcciones = EmpresaDireccion::where('empresa_id',$empresa->id)
+        $Sucdirecciones = EmpresaDireccion::where('empresa_id',$empresa->id)
              ->where('sucursal','<>',1)
              ->get();
-        return view('documento.datosGenerales.form', compact('empresa','direcciones'));
+        return view('documento.datosGenerales.form', compact('empresa','Sucdirecciones','articulos'));
     }
     public function postDatosgenerales(){
         $data = Input::all();
@@ -188,25 +190,67 @@ class DocumentoController extends Controller
         }
         $documento = Documento::where('empresa_id',$data['empresa_id'])->first();
         $documento->update(['estado' => 2]);
-        return Redirect::to('/home');
+        return Redirect::to('/home/2/'.$documento->titulo);
     }
-    public function getExportplantilla($doc=0){
-        $arrTamaño = [1=>"Microempresa",2=>"Pequeña empresa",3=>"Mediana empresa A",4=>"Mediana empresa B",5=>"Gran empresa"];
-        $si_no = ['No','Si'];
+    public function getExportplantilla($doc=0)
+    {
+        $arrTamaño = [1 => "Microempresa", 2 => "Pequeña empresa", 3 => "Mediana empresa A", 4 => "Mediana empresa B", 5 => "Gran empresa"];
+        $si_no = ['No', 'Si'];
         $documento = Documento::find($doc);
         $empresa = Empresa::find($documento->empresa_id);
-        $direcciones = EmpresaDireccion::where('empresa_id',$empresa->id)->get();
-        $objetivos = DocumentoObjetivo::where('documento_id',$documento->id)->get();
-        $ambitos = DocumentoAmbito::where('documento_id',$documento->id)->get();
-        $politicas = DocumentoPolitica::where('documento_id',$documento->id)->get();
-        $reprecentante =Representante::where('empresa_id',$empresa->id)->first();
+        $direcciones = EmpresaDireccion::where('empresa_id', $empresa->id)->get();
+        $objetivos = DocumentoObjetivo::where('documento_id', $documento->id)->get();
+        $ambitos = DocumentoAmbito::where('documento_id', $documento->id)->get();
+        $politicas = DocumentoPolitica::where('documento_id', $documento->id)->get();
+        $reprecentante = Representante::where('empresa_id', $empresa->id)->first();
         $poblacion = $empresa->hombres + $empresa->mujeres + $empresa->menores + $empresa->vulnerables;
-
-//      CREA INSTANCIA DE PLANTILLA
+        /*$riesgos = Riesgos::leftjoin('riesgo_empresa', 'riesgo_empresa.riesgo_id', '=', 'riesgo.id')
+             ->where('riesgo_empresa.empresa_id', $empresa->id)
+             ->select('riesgo.id', 'riesgo.riesgo', 'riesgo.descripcion', 'riesgo.tipoRiesgo_id')
+             ->orderBy('riesgo.tipoRiesgo_id','asc')
+             ->get();*/
+        $tipoRiesgos = Riesgos::leftjoin('riesgo_empresa', 'riesgo_empresa.riesgo_id', '=', 'riesgo.id')
+             ->leftjoin('tiporiesgo','tiporiesgo.id','=','riesgo.tipoRiesgo_id')
+             ->where('riesgo_empresa.empresa_id',$empresa->id)
+             ->select('tiporiesgo.id','riesgo.tipoRiesgo_id','tiporiesgo.riesgo')
+             ->groupBy('riesgo.tipoRiesgo_id')
+             ->get();
+//==========================CREA INSTANCIA DE PLANTILLA===================================
         $templateWord = new TemplateProcessor(asset('/storage/plantilla_Word/REG_HIG_Y_SEGURIDAD.docx'));
-
 //      VARIABLES SEGUN N° TRABAJADORES
 //        if($poblacion >= 10)
+
+//      COLOCAR RIESGOS
+        $templateWord->cloneBlock('CLONEME_TIPO', count($tipoRiesgos));
+        $i=0;
+        foreach ($tipoRiesgos as $triesgo) {
+            $i++;
+            $templateWord->setValue('tipoRiesgo_'.$i,$triesgo->riesgo);
+            $riesgos = Riesgos::leftjoin('riesgo_empresa', 'riesgo_empresa.riesgo_id', '=', 'riesgo.id')
+                 ->where('riesgo_empresa.empresa_id', $empresa->id)
+                 ->where('riesgo.tipoRiesgo_id', $triesgo->id)
+                 ->select('riesgo.id', 'riesgo.riesgo', 'riesgo.tipoRiesgo_id')
+                 ->get();
+            $templateWord->cloneBlock('CLONEME_RIESGO_'.$i, count($riesgos));
+            $j=0;
+            foreach ($riesgos as $riesgo){
+                $j++;
+                $templateWord->setValue('riesgo_'.$i.'_'.$j,$riesgo->riesgo);
+                $articulos =Articulos::where('riesgo_id',$riesgo->id)
+                     ->orderBy('num_articulo')
+                     ->get();
+                $templateWord->cloneBlock('CLONEME_ARTICULO_'.$i.'_'.$j, count($articulos));
+                $k=0;
+                foreach ($articulos as $articulo){
+                    $k++;
+                    $buscar = array("<p>","</p>","<ul>","</ul>","<li>","</li>","<ol>","</ol>");
+//                    $reemplazar = array("pizza", "beer", "ice cream");
+                    $articulotxt = str_replace($buscar, 'a', $articulo->articulo);
+                    $templateWord->setValue('articulo_'.$i.'_'.$j.'_'.$k,$articulotxt);
+                }
+            }
+        }
+
 //      INGRESAR VALORES DE LAS VARIABLES
 //        LOGO
         if($empresa->logo != ''){
@@ -224,9 +268,15 @@ class DocumentoController extends Controller
         $templateWord->setValue('poblacion',$poblacion);
         $templateWord->setValue('centros',$empresa->centros);
         $templateWord->setValue('direcciónMatriz',$direcciones[0]->direccion);
-        $templateWord->cloneRow('direcciónSucursal',count($direcciones)-1);
-        for($i=1;$i<=count($direcciones)-1;$i++){
-            $templateWord->setValue('direcciónSucursal#'.$i,$direcciones[$i]->sucursal-1 .'.- '.$direcciones[$i]->direccion);
+        if(count($direcciones) > 1){
+            $templateWord->setValue('sucursal','Sucursales: ');
+            $templateWord->cloneRow('direcciónSucursal',count($direcciones)-1);
+            for($i=1;$i<=count($direcciones)-1;$i++){
+                $templateWord->setValue('direcciónSucursal#'.$i,$direcciones[$i]->sucursal-1 .'.- '.$direcciones[$i]->direccion);
+            }
+        }else{
+            $templateWord->setValue('sucursal','');
+            $templateWord->setValue('direcciónSucursal','');
         }
 //        PREGUNTAS
         $templateWord->setValue('comite',$si_no[$empresa->comiteSH]);
@@ -269,51 +319,19 @@ class DocumentoController extends Controller
         
         return response()->download($documento->titulo.'.docx');
     }
-    public function getExportar($doc=0){
-        $arrTamaño = [1=>"Microempresa",2=>"Pequeña empresa",3=>"Mediana empresa A",4=>"Mediana empresa B",5=>"Gran empresa"];
-        
-        $documento = Documento::find($doc);
-        $empresa = Empresa::find($documento->empresa_id);
-        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+    public function getpruebasword(){
 
-        $section1 = $phpWord->addSection();
-//      STILOS DE LOS TEXTOS
-        $phpWord->setDefaultFontName('Calibri');
-        $phpWord->setDefaultFontSize(11);
-        $phpWord->addTitleStyle(1, array('size' => 14,'bold'=>true,'name'=>'Calibri'), array('alignment'=>'center'));
-        $phpWord->addFontStyle('subtitulos',['size'=> 12,'bold'=>true]);
-        $phpWord->addFontStyle('titulos1',['size'=> 28,'bold'=>true]);
-        $phpWord->addFontStyle('titulos2',['size'=> 21,'bold'=>true]);
-        $phpWord->addParagraphStyle('titulos',['alignment'=>'center']);
-//      INGRESO DE TEXTO
-        $section1->addTextBreak(10);
-        $section1->addText($empresa->nombre,'titulos1','titulos');
-        $section1->addText('REGLAMENTO INTERNO DE HIGIENE Y SEGURIDAD','titulos2','titulos');
-        $section1->addTextBreak(1);
-        $section1->addPageBreak();
+// Template processor instance creation
+//        $templateProcessor = new TemplateProcessor(asset('/storage/plantilla_Word/Sample_23_TemplateBlock.docx'));
+        $templateProcessor = new TemplateProcessor(asset('/storage/plantilla_Word/uno.docx'));
 
-        $section2 = $phpWord->addSection();
-        $section2->addTOC();
+// Will clone everything between ${tag} and ${/tag}, the number of times. By default, 1.
+        $templateProcessor->cloneBlock('CLONEME', 3);
 
-        $section3 = $phpWord->addSection();
-        $section3->getStyle()->setPageNumberingStart(5);
-//        DATOS GENERALES
-        $section3->addTitle('DATOS GENERALES DE LA EMPRESA',1);
-        $dg1 = $section3->addText('Registro Único de Contribuyentes (RUC): '.$empresa->ruc);
-        $section3->addText('Razón Social: '.$empresa->razonSocial);
-        $section3->addText('Actividad Económica: '.$empresa->actiEconomica);
-        $section3->addText('Tamaño de la Empresa: '.$arrTamaño[$empresa->tamaño]);
-//        OBJETIVOS Y AMBITO
-        $section3->addTitle('OBJETO Y ÁMBITO DE APLICACIÓN',1);
-//        POLITICAS
-        $section3->addTitle('POLÍTICA DE SEGURIDAD Y SALUD EN EL TRABAJO',1);
+// Everything between ${tag} and ${/tag}, will be deleted/erased.
+//        $templateProcessor->deleteBlock('DELETEME');
 
-        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-        try {
-            $objWriter->save(storage_path($documento->titulo.'.docx'));
-        } catch (Exception $e) {
-
-        }
-//        return response()->download(storage_path($documento->titulo.'.docx'));
+        $templateProcessor->saveAs('Sample_23_TemplateBlock.docx');
     }
 }
+

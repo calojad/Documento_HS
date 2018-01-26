@@ -49,7 +49,7 @@
                     <h4 class="modal-title">Añadir un Objetivo</h4>
                 </div>
                 {!! Form::open(['url'=>'objetivos/crear', 'method'=>'post']) !!}
-                <div class="modal-body row form-horizontal">
+                <div class="modal-body form-horizontal">
                     <div class="form-group">
                         <label class="control-label col-md-3">Titulo:</label>
                         <div class="col-md-8">

@@ -59,7 +59,7 @@
                     <h4 class="modal-title">Añadir una Política</h4>
                 </div>
                 {!! Form::open(['url'=>'politica/crear', 'method'=>'post']) !!}
-                <div class="modal-body row form-horizontal">
+                <div class="modal-body form-horizontal">
                     <div class="form-group">
                         <label class="control-label col-md-3">Titulo:</label>
                         <div class="col-md-8">
@@ -69,7 +69,7 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label">Descripción:</label>
                         <div class="col-md-8">
-                            <textarea name="descripcion" class="form-control" type="text"></textarea>
+                            <textarea name="descripcion" class="form-control" type="text" style="resize: vertical;"></textarea>
                         </div>
                     </div>
                 </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ambito;
+use App\Models\Articulos;
 use App\Models\Empresa;
 use App\Models\Objetivo;
 use App\Models\Parrafos;
@@ -21,6 +22,10 @@ class MantenimientoController extends Controller
     public function getAmbitos(){
         $ambitos = Ambito::all();
         return view('mantenimientos.ambito.ambitos', compact('ambitos'));
+    }
+    public function getArticulos(){
+        $articulos = Articulos::all();
+        return view('mantenimientos.articulo.articulos', compact('articulos'));
     }
     public function getEmpresas(){
         $empresas = Empresa::all();
@@ -60,6 +65,12 @@ class MantenimientoController extends Controller
         $titulo = 'EDITAR AMBITO';
         return view('mantenimientos.ambito.form', compact('ambito','titulo'));
     }
+    public function getEditararticulo($id){
+        $articulo = Articulos::find($id);
+        $riesgos = Riesgos::all();
+        $titulo = 'EDITAR ARTICULO';
+        return view('mantenimientos.articulo.form', compact('articulo','titulo','riesgos'));
+    }
     public function getEditarempresa($id){
         $empresa = Empresa::find($id);
         $titulo = 'EDITAR EMPRESA';
@@ -88,8 +99,9 @@ class MantenimientoController extends Controller
     public function getEditariesgo($id){
         $riesgo = Riesgos::find($id);
         $tipoRiesgos = TipoRiesgos::orderBy('riesgo','ASC')->pluck('riesgo','id');
+        $articulos = Articulos::where('riesgo_id',$riesgo->id)->get();
         $titulo = 'EDITAR RIESGO';
-        return view('mantenimientos.riesgo.form', compact('riesgo','titulo','tipoRiesgos'));
+        return view('mantenimientos.riesgo.form', compact('riesgo','titulo','tipoRiesgos','articulos'));
     }
     public function getEditartiporiesgo($id){
         $tipoRiesgo = TipoRiesgos::find($id);
@@ -106,7 +118,13 @@ class MantenimientoController extends Controller
         $data = Input::all();
         $ambito = Ambito::find($id);
         $ambito->update($data);
-        return Redirect::to('mantenimiento/ambitos');
+        return Redirect::to('mantenimiento/ambito');
+    }
+    public function postEditararticulo($id){
+        $data = Input::all();
+        $articulo = Articulos::find($id);
+        $articulo->update($data);
+        return Redirect::to('mantenimiento/articulos');
     }
     public function postEditarempresa($id){
         $data = Input::all();
@@ -139,9 +157,20 @@ class MantenimientoController extends Controller
         return Redirect::to('mantenimiento/representantes');
     }
     public function postEditariesgo($id){
-        $data = Input::all();
+        $dataRiesgo['riesgo'] = Input::get('riesgo');
+        $dataRiesgo['tipoRiesgo_id'] = Input::get('tipoRiesgo_id');
         $riesgo = Riesgos::find($id);
-        $riesgo->update($data);
+        $riesgo->update($dataRiesgo);
+        $articulosRiesgo = Articulos::where('riesgo_id',$id)->get();
+        if(count($articulosRiesgo) > 0)
+            foreach ($articulosRiesgo as $articulo){ $articulo->delete(); }
+        for ($i=1;$i<=Input::get('contador');$i++) {
+            $dataArticulo['riesgo_id'] = $riesgo->id;
+            $dataArticulo['articulo'] = Input::get('articulo_'.$i);
+            $dataArticulo['num_articulo'] = $i;
+            Articulos::create($dataArticulo);
+        }
+
         return Redirect::to('mantenimiento/riesgos');
     }
     public function postEditartiporiesgo($id){
@@ -162,6 +191,12 @@ class MantenimientoController extends Controller
         $titulo = 'CREAR AMBITO';
         return view('mantenimientos.ambito.form', compact('ambito','titulo'));
     }
+    public function getCreararticulo(){
+        $articulo = new Articulos();
+        $riesgos = Riesgos::all();
+        $titulo = 'CREAR ARTICULO';
+        return view('mantenimientos.articulo.form', compact('articulo','titulo','riesgos'));
+    }
     public function getCrearobjetivo(){
         $objetivo = new Objetivo();
         $titulo = 'CREAR OBJETIVO';
@@ -179,9 +214,12 @@ class MantenimientoController extends Controller
     }
     public function getCreariesgo(){
         $riesgo = new Riesgos();
-        $tipoRiesgos = TipoRiesgos::orderBy('riesgo','ASC')->pluck('riesgo','id');
+        $tipoRiesgos = ['0'=>'--Seleccione--'] + TipoRiesgos::orderBy('riesgo','ASC')
+                  ->pluck('riesgo','id')
+                  ->toArray();
+        $articulos = null;
         $titulo = 'CREAR RIESGO';
-        return view('mantenimientos.riesgo.form', compact('riesgo','titulo','tipoRiesgos'));
+        return view('mantenimientos.riesgo.form', compact('riesgo','titulo','tipoRiesgos','articulos'));
     }
     public function getCreatiporiesgo(){
         $tipoRiesgo = new TipoRiesgos();
@@ -194,6 +232,14 @@ class MantenimientoController extends Controller
         Ambito::create($data);
 
         return Redirect::to('mantenimiento/ambitos');
+    }
+    public function postCreararticulo(){
+        $data = Input::all();
+        $aux = Articulos::where('riesgo_id',$data['riesgo_id'])->count();
+        $data['num_articulo'] = $aux + 1;
+        Articulos::create($data);
+
+        return Redirect::to('mantenimiento/articulos');
     }
     public function postCrearobjetivo(){
         $data = Input::all();
@@ -214,9 +260,16 @@ class MantenimientoController extends Controller
         return Redirect::to('mantenimiento/politicas');
     }
     public function postCreariesgo(){
-        $data = Input::all();
-        Riesgos::create($data);
-
+        $dataRiesgo['riesgo'] = Input::get('riesgo');
+        $dataRiesgo['tipoRiesgo_id'] = Input::get('tipoRiesgo_id');
+        $riesgo = Riesgos::create($dataRiesgo);
+        for ($i=1;$i<=Input::get('contador');$i++) {
+            $dataArticulo['riesgo_id'] = $riesgo->id;
+            $dataArticulo['articulo'] = Input::get('articulo_'.$i);
+            $dataArticulo['num_articulo'] = $i;
+            $articulo = Articulos::create($dataArticulo);
+        }
+        
         return Redirect::to('mantenimiento/riesgos');
     }
     public function postCreatiporiesgo(){
@@ -231,6 +284,12 @@ class MantenimientoController extends Controller
         $ambito->delete();
 
         return Redirect::to('mantenimiento/ambitos');
+    }
+    public function getEliminararticulo($id){
+        $articulo = Articulos::find($id);
+        $articulo->delete();
+
+        return Redirect::to('mantenimiento/articulos');
     }
     public function getEliminarobjetivo($id){
         $objetivo = Objetivo::find($id);
