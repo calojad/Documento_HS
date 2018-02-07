@@ -1,4 +1,4 @@
-    <!-- jQuery 2.2.4 -->
+    <!-- jQuery 3.2.1 -->
     <script src="{{ asset('/plugins/jquery-libs/jquery-3.2.1.min.js') }}" type="text/javascript"></script>
     {{--<!-- Bootstrap core JavaScript -->
     <script src="{{asset('/bootstrap/js/bootstrap.min.js')}}" type="text/javascript"></script>--}}
@@ -12,3 +12,5 @@
     <!-- DataTables -->
     <script src="{{ asset('/plugins/dataTables/jquery.dataTables.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('/plugins/dataTables/dataTables.bootstrap.min.js') }}" type="text/javascript"></script>
+    <!-- jquery-confirm -->
+    <script src="{{asset('/plugins/jquery_alerts/jquery-confirm.min.js')}}"></script>

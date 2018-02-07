@@ -14,8 +14,6 @@ use App\Models\Politica;
 use App\Models\Riesgos;
 use App\Models\RiesgosEmpresa;
 use App\Models\TipoRiesgos;
-use App\Helpers\HTMLtoOpenXML;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -28,7 +26,20 @@ use App\Models\Documento;
 
 class DocumentoController extends Controller
 {
-    //
+//    FUNCIONES DEL DOCUMENTO
+    public function getEliminardocumento($id){
+        $documento = Documento::find($id);
+        $documento->delete();
+        return json_encode('/home');
+    }
+    public function postConfigdocumento(){
+        $data = Input::all();
+        $documento = Documento::find($data['id']);
+        $documento->update($data);
+
+        return Redirect::to('/home');
+    }
+    //FORMULARIO PARA LLENAR EL DOCUMENTO
     public function getDatosgenerales($ver=0){
         $documento = Documento::find($ver);
         $empresa = new Empresa();
@@ -178,6 +189,7 @@ class DocumentoController extends Controller
         return view('documento.matrizRiesgos.form_identi', compact('riesgos','tipoRiesgos','probabilidades','consecuencias','control','riesgosEmp'));
     }
     public function postIdentificariesgos(){
+        dd(Input::all());
         $data['empresa_id'] = Session::get('empresaId');
         $inputRiesgos = Input::get('riesgos');
         $riesgoEmpresa = RiesgosEmpresa::where('empresa_id',$data['empresa_id'])
@@ -216,7 +228,12 @@ class DocumentoController extends Controller
              ->groupBy('riesgo.tipoRiesgo_id')
              ->get();
 //==========================CREA INSTANCIA DE PLANTILLA===================================
-        $templateWord = new TemplateProcessor(asset('/storage/plantilla_Word/REG_HIG_Y_SEGURIDAD.docx'));
+        if($documento->encabezado == 1)
+            $templateWord = new TemplateProcessor(asset('/storage/plantilla_Word/REG_HIG_Y_SEGURIDAD_1.docx'));
+        else if($documento->encabezado == 2)
+            $templateWord = new TemplateProcessor(asset('/storage/plantilla_Word/REG_HIG_Y_SEGURIDAD_2.docx'));
+        else
+            $templateWord = new TemplateProcessor(asset('/storage/plantilla_Word/REG_HIG_Y_SEGURIDAD_3.docx'));
 //      VARIABLES SEGUN N° TRABAJADORES
 //        if($poblacion >= 10)
 
@@ -239,14 +256,12 @@ class DocumentoController extends Controller
                 $articulos =Articulos::where('riesgo_id',$riesgo->id)
                      ->orderBy('num_articulo')
                      ->get();
-                $templateWord->cloneBlock('CLONEME_ARTICULO_'.$i.'_'.$j, count($articulos));
+                if(count($articulos) > 0)
+                    $templateWord->cloneBlock('CLONEME_ARTICULO_'.$i.'_'.$j,count($articulos));
                 $k=0;
                 foreach ($articulos as $articulo){
                     $k++;
-                    $buscar = array("<p>","</p>","<ul>","</ul>","<li>","</li>","<ol>","</ol>");
-//                    $reemplazar = array("pizza", "beer", "ice cream");
-                    $articulotxt = str_replace($buscar, 'a', $articulo->articulo);
-                    $templateWord->setValue('articulo_'.$i.'_'.$j.'_'.$k,$articulotxt);
+                    $templateWord->setValue('articulo_'.$i.'_'.$j.'_'.$k,$articulo->articulo);
                 }
             }
         }

@@ -37,6 +37,10 @@
                                             <th style="width: 10px;">#</th>
                                             <th>Riesgo</th>
                                             <th>Seleccionar</th>
+                                            <th>Probabilidad</th>
+                                            <th>Consecuencia</th>
+                                            <th>Estimación</th>
+                                            <th>Control</th>
                                             <th>Accion</th>
                                         </tr>
                                         </thead>
@@ -50,6 +54,20 @@
                                                 <td>{{$riesgo->riesgo}}</td>
                                                 <td>
                                                     <input id="{{$riesgo->id}}" name="riesgos[]" type="checkbox" value="{{$riesgo->id}}">
+                                                </td>
+                                                <td id="selProbabilidad_{{$riesgo->id}}">
+                                                    No Seleccionado
+                                                    {{--{!! Form::select('probabilidad[]',$probabilidades,0,array('required'=>'required', 'id'=>'probabilidad_'.$riesgo->id, 'riesgoId'=>$riesgo->id, 'class'=>'probabilidad')) !!}--}}
+                                                </td>
+                                                <td>
+                                                    {!! Form::select('consecuencia[]',$consecuencias,0,array('required'=>'required','id'=>'consecuencia_'.$riesgo->id, 'riesgoId'=>$riesgo->id, 'class'=>'consecuencia')) !!}
+                                                </td>
+                                                <td>
+                                                    <label id="estimacion_{{$riesgo->id}}" class="label label-default" style="font-size: 10pt"></label>
+                                                    <input type="hidden" name="estimacion[]">
+                                                </td>
+                                                <td>
+                                                    {!! Form::select('control[]',$control,0,array('required'=>'required')) !!}
                                                 </td>
                                                 <td>
                                                     <a id="btnEditarRiesgo" data-toggle="modal" data-target="#modalRiesgos" riesgoId="{{$riesgo->id}}"><i class="fa fa-edit"></i></a>

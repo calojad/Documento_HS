@@ -1,10 +1,17 @@
 <script type="text/javascript">
+    {{-- ELIMINAR LA CLASE 'CONTAINER' DEL LAYOUT PRINCIPAL --}}
     var contenerdor_layout = $('#contenedor_inicial');
     contenerdor_layout.removeClass('container');
+//  MARCAR LOS RIESGOS QUE YA ESTAN CARGADOS EN LA BASE DE DATOS
     $(function () {
         var riesgosEmpresa = JSON.parse($('#riesgosEmpresa').val());
         $.each(riesgosEmpresa,function (key, value) {
+//            CARGAR RIESGOS SELECCIONADOS
             $('#'+value.riesgo_id).attr('checked',true);
+//            CARGAR SELECT DE PROBABILIDADES
+            var selecProb = $('#selProbabilidad_'+value.riesgo_id);
+            selecProb.empty();
+            selecProb.append('<select required="required" id="probabilidad_'+value.riesgo_id+'" riesgoId="'+value.riesgo_id+'" class="probabilidad" name="probabilidad[]"><option value="0">--Seleccionar--</option><option value="1"'+value.probabilidad==1?'selected':''+'>B-Baja</option><option value="2"'+value.probabilidad==2?'selected':''+'>M-Media</option><option value="3"'+value.probabilidad==3?'selected':''+'>A-Alta</option></select>');
         });
     });
     $(function () {
