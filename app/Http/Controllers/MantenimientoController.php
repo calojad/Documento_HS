@@ -118,7 +118,7 @@ class MantenimientoController extends Controller
         $data = Input::all();
         $ambito = Ambito::find($id);
         $ambito->update($data);
-        return Redirect::to('mantenimiento/ambito');
+        return Redirect::to('mantenimiento/ambitos');
     }
     public function postEditararticulo($id){
         $data = Input::all();

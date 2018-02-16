@@ -1,7 +1,4 @@
 @extends('layouts.app')
-{{--@section('style')
-    <link href="{{asset('/plugins/iCheck/square/blue.css')}}" rel="stylesheet">
-@endsection--}}
 @section('content')
     <div class="col-md-12">
         <div class="row">
@@ -40,8 +37,8 @@
                                             <th>Probabilidad</th>
                                             <th>Consecuencia</th>
                                             <th>Estimación</th>
-                                            <th>Control</th>
-                                            <th>Accion</th>
+                                            {{--<th>Control</th>--}}
+                                            {{--<th>Accion</th>--}}
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -53,25 +50,22 @@
                                                 <td>{{$count}}</td>
                                                 <td>{{$riesgo->riesgo}}</td>
                                                 <td>
-                                                    <input id="{{$riesgo->id}}" name="riesgos[]" type="checkbox" value="{{$riesgo->id}}">
+                                                    <input id="{{$riesgo->id}}" class="inpSeleccionar" name="riesgos[]" type="checkbox" value="{{$riesgo->id}}">
                                                 </td>
                                                 <td id="selProbabilidad_{{$riesgo->id}}">
                                                     No Seleccionado
-                                                    {{--{!! Form::select('probabilidad[]',$probabilidades,0,array('required'=>'required', 'id'=>'probabilidad_'.$riesgo->id, 'riesgoId'=>$riesgo->id, 'class'=>'probabilidad')) !!}--}}
                                                 </td>
-                                                <td>
-                                                    {!! Form::select('consecuencia[]',$consecuencias,0,array('required'=>'required','id'=>'consecuencia_'.$riesgo->id, 'riesgoId'=>$riesgo->id, 'class'=>'consecuencia')) !!}
+                                                <td id="selConsecuencias_{{$riesgo->id}}">
+                                                    No Seleccionado
                                                 </td>
-                                                <td>
-                                                    <label id="estimacion_{{$riesgo->id}}" class="label label-default" style="font-size: 10pt"></label>
-                                                    <input type="hidden" name="estimacion[]">
+                                                <td id="labEstimacion_{{$riesgo->id}}">
                                                 </td>
-                                                <td>
+                                                {{--<td>
                                                     {!! Form::select('control[]',$control,0,array('required'=>'required')) !!}
-                                                </td>
-                                                <td>
+                                                </td>--}}
+                                                {{--<td>
                                                     <a id="btnEditarRiesgo" data-toggle="modal" data-target="#modalRiesgos" riesgoId="{{$riesgo->id}}"><i class="fa fa-edit"></i></a>
-                                                </td>
+                                                </td>--}}
                                             </tr>
                                             @endif
                                         @endforeach
@@ -123,8 +117,3 @@
     </div>
     @include('documento.matrizRiesgos.form_scripts')
 @endsection
-
-{{--@section('script')
-    <!-- iCheck 1.0.1 -->
-    <script src="{{asset('/plugins/iCheck/icheck.min.js')}}"></script>
-@endsection--}}

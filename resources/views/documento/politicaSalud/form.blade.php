@@ -13,7 +13,7 @@
                         {!! Form::open(['url'=>'documento/politicasalud', 'method'=>'post','class'=>'form-horizontal row-border', 'enctype'=>'multipart/form-data']) !!}
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="col-md-3 control-label">Reprecentante legal: </label>
+                                <label class="col-md-3 control-label">* Reprecentante legal: </label>
                                 <div class="col-md-9">
                                     <input name="reprecentante" class="form-control" type="text" required placeholder="Nombres y Apellidos" value="{{$reprecentante != null ?$reprecentante->nombre:old('reprecentante')}}">
                                 </div>
@@ -21,7 +21,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Cedula: </label>
                                 <div class="col-md-9">
-                                    <input name="cedula" class="form-control" type="text" required value="{{$reprecentante != null ?$reprecentante->cedula:old('reprecentante')}}">
+                                    <input name="cedula" class="form-control" type="text" value="{{$reprecentante != null ?$reprecentante->cedula:old('reprecentante')}}">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -33,7 +33,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-3">
-                                    <label class="col-md-12 control-label">Políticas: </label>
+                                    <label class="col-md-12 control-label">* Políticas: </label>
                                     <button type="button" class="btn btn-twitter pull-right" data-toggle="modal" data-target="#modalPoliticas"><i class="fa fa-plus-square"></i> Añadir</button>
                                 </div>
                                 <div class="col-md-9">
@@ -42,6 +42,8 @@
                             </div>
                         </div>
                         <div class="col-md-12">
+                            <a class="btn btn-primary pull-left" type="submit"><i class="fa fa-arrow-left"></i>
+                                Regresar</a>
                             <button class="btn btn-primary pull-right" type="submit"><i class="fa fa-arrow-right"></i>
                                 Siguiente</button>
                         </div>
@@ -58,24 +60,19 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Añadir una Política</h4>
                 </div>
-                {!! Form::open(['url'=>'politica/crear', 'method'=>'post']) !!}
+                {!! Form::open(['url'=>'politica/crear', 'method'=>'post', 'id'=>'formCrearPolitica']) !!}
                 <div class="modal-body form-horizontal">
                     <div class="form-group">
-                        <label class="control-label col-md-3">Titulo:</label>
+                        <label class="col-md-3 control-label">Politica:</label>
                         <div class="col-md-8">
-                            <input name="titulo" class="form-control" type="text">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Descripción:</label>
-                        <div class="col-md-8">
-                            <textarea name="descripcion" class="form-control" type="text" style="resize: vertical;"></textarea>
+                            <input id="inpTitulo" name="titulo" class="form-control" type="hidden">
+                            <textarea id="txtDescripcion" name="descripcion" class="form-control" type="text" style="resize: vertical;"></textarea>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
+                    <button id="btnGuardarPolitica" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
                 </div>
                 {!! Form::close() !!}
             </div>

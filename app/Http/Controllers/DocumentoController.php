@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rules\In;
 use PhpOffice\PhpWord\TemplateProcessor;
 use Styde\Html\Facades\Alert;
 use Illuminate\Support\Facades\Input;
@@ -48,6 +49,8 @@ class DocumentoController extends Controller
         $Sucdirecciones = EmpresaDireccion::where('empresa_id',$empresa->id)
              ->where('sucursal','<>',1)
              ->get();
+        Session::put('documentoId',0);
+        Session::put('empresaId',0);
         return view('documento.datosGenerales.form', compact('empresa','Sucdirecciones','articulos'));
     }
     public function postDatosgenerales(){
@@ -189,16 +192,23 @@ class DocumentoController extends Controller
         return view('documento.matrizRiesgos.form_identi', compact('riesgos','tipoRiesgos','probabilidades','consecuencias','control','riesgosEmp'));
     }
     public function postIdentificariesgos(){
-        dd(Input::all());
         $data['empresa_id'] = Session::get('empresaId');
         $inputRiesgos = Input::get('riesgos');
+        $inputProba = Input::get('probabilidad');
+        $inputConce = Input::get('consecuencia');
+        $inputEstima = Input::get('estimacion');
         $riesgoEmpresa = RiesgosEmpresa::where('empresa_id',$data['empresa_id'])
              ->get();
         if(count($riesgoEmpresa) > 0)
             foreach ($riesgoEmpresa as $rEmp){ $rEmp->delete(); }
+        $i=0;
         foreach ($inputRiesgos as $irgs){
             $data['riesgo_id'] = $irgs;
+            $data['probabilidad'] = $inputProba[$i];
+            $data['consecuencia'] = $inputConce[$i];
+            $data['estimacion'] = $inputEstima[$i];
             RiesgosEmpresa::create($data);
+            $i++;
         }
         $documento = Documento::where('empresa_id',$data['empresa_id'])->first();
         $documento->update(['estado' => 2]);
@@ -256,7 +266,7 @@ class DocumentoController extends Controller
                 $articulos =Articulos::where('riesgo_id',$riesgo->id)
                      ->orderBy('num_articulo')
                      ->get();
-                if(count($articulos) > 0)
+                if(count($articulos) >= 0)
                     $templateWord->cloneBlock('CLONEME_ARTICULO_'.$i.'_'.$j,count($articulos));
                 $k=0;
                 foreach ($articulos as $articulo){
