@@ -25,7 +25,7 @@
                     break;
             }
             var selectedConce = '<option value="0">--Seleccionar--</option><option value="1">LD-Ligeramente Dañino</option><option value="2">D-Dañino</option><option value="3">ED-Extremadamente Dañino</option>';
-            switch (value.probabilidad) {
+            switch (value.consecuencia) {
                 case 1:
                     selectedConce = '<option value="0">--Seleccionar--</option><option value="1" selected>LD-Ligeramente Dañino</option><option value="2">D-Dañino</option><option value="3">ED-Extremadamente Dañino</option>';
                     break;
