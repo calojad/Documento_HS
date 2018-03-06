@@ -14,11 +14,14 @@ use App\Models\Politica;
 use App\Models\Riesgos;
 use App\Models\RiesgosEmpresa;
 use App\Models\TipoRiesgos;
+use Barryvdh\DomPDF\PDF;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rules\In;
+use Illuminate\Support\Facades\View;
 use PhpOffice\PhpWord\TemplateProcessor;
 use Styde\Html\Facades\Alert;
 use Illuminate\Support\Facades\Input;
@@ -338,25 +341,55 @@ class DocumentoController extends Controller
             $templateWord->setImg('firma_rep',['src'=>storage_path('app/'.$reprecentante->firma),'swh'=>150]);
         else
             $templateWord->setValue('firma_rep','');
+        $templateWord->setImg('cedularepresenta',$reprecentante->cedula);
 
 //      GUARDAR DOCUMENTO
         $templateWord->saveAs($documento->titulo.'.docx');
         
         return response()->download($documento->titulo.'.docx');
     }
-    public function getpruebasword(){
+    public function getExportarmatriz(){
+        $documentos = Documento::where('estado','<>',0)->get();
+        return view('documento.matrizRiesgos.exportarMatriz',compact('documentos'));
+    }
+    public function getExportmatrizpdf(){
+        $tipoRiesgo = TipoRiesgos::orderBy('id','asc')->pluck('riesgo','id');;
+        $numTipo = Riesgos::select(DB::raw('count(tipoRiesgo_id) as numero, tipoRiesgo_id'))
+             ->groupBy('tipoRiesgo_id')
+             ->get();
+//             ->pluck('numero','tipoRiesgo_id');
+//        dd($numTipo);
+        $riesgos = Riesgos::orderBy('tipoRiesgo_id','asc')->get();
+        $pdf  = App::make('dompdf.wrapper');
+        $view = View::make('documento.matrizRiesgos.pdfMatriz',compact('riesgos','tipoRiesgo','numTipo'))->render();
+//      portrait - landscape
+        $pdf->setPaper('A4', 'landscape');
+        $pdf->loadHTML($view);
 
-// Template processor instance creation
-//        $templateProcessor = new TemplateProcessor(asset('/storage/plantilla_Word/Sample_23_TemplateBlock.docx'));
-        $templateProcessor = new TemplateProcessor(asset('/storage/plantilla_Word/uno.docx'));
+        return $pdf->stream('Matriz Riesgos.pdf');
+    }
+    public function  getExportmatrizemppdf($id){
+        $tipoRiesgo = TipoRiesgos::leftjoin('riesgo','riesgo.tipoRiesgo_id','=','tiporiesgo.id')
+             ->leftjoin('riesgo_empresa','riesgo.id','=','riesgo_empresa.riesgo_id')
+             ->where('riesgo_empresa.empresa_id',$id)
+             ->orderBy('id','asc')
+             ->pluck('riesgo.riesgo','riesgo.id');
+        $numTipo = Riesgos::leftjoin('riesgo_empresa','riesgo_empresa.riesgo_id','=','riesgo.id')
+             ->select(DB::raw('count(tipoRiesgo_id) as numero, tipoRiesgo_id'))
+             ->where('empresa_id',$id)
+             ->groupBy('tipoRiesgo_id')
+             ->get();
+        $riesgos = Riesgos::leftjoin('riesgo_empresa','riesgo.id','=','riesgo_empresa.riesgo_id')
+             ->where('empresa_id',$id)
+             ->orderBy('riesgo.tipoRiesgo_id','asc')
+             ->select('riesgo.id','riesgo.tipoRiesgo_id','riesgo.riesgo','riesgo_empresa.empresa_id','riesgo_empresa.probabilidad','riesgo_empresa.consecuencia','riesgo_empresa.estimacion','riesgo_empresa.control','riesgo_empresa.observacion','riesgo_empresa.seguimiento')
+             ->get();
+        $empresa = Empresa::find($id);
+        $pdf  = App::make('dompdf.wrapper');
+        $view = View::make('documento.matrizRiesgos.pdfMatriz',compact('riesgos','tipoRiesgo','numTipo','empresa'))->render();
+        $pdf->setPaper('A4', 'landscape');
+        $pdf->loadHTML($view);
 
-// Will clone everything between ${tag} and ${/tag}, the number of times. By default, 1.
-        $templateProcessor->cloneBlock('CLONEME', 3);
-
-// Everything between ${tag} and ${/tag}, will be deleted/erased.
-//        $templateProcessor->deleteBlock('DELETEME');
-
-        $templateProcessor->saveAs('Sample_23_TemplateBlock.docx');
+        return $pdf->stream('Matriz Riesgos.pdf');
     }
 }
-

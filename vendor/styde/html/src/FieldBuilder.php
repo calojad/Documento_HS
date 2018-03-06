@@ -548,15 +548,7 @@ class FieldBuilder
      */
     protected function getRequired($attributes)
     {
-        if (in_array('required', $attributes)) {
-            return true;
-        }
-
-        if (isset($attributes['required'])) {
-            return $attributes['required'];
-        }
-
-        return false;
+        return in_array('required', $attributes);
     }
 
     /**
@@ -633,7 +625,7 @@ class FieldBuilder
         }
 
         if ( ! empty($errors)) {
-            $classes .= ' '.(isset($classes['error']) ? $classes['error'] : 'error');
+            $classes .= ' '.(isset($this->cssClasses['error']) ? $this->cssClasses['error'] : 'error');
         }
 
         return trim($classes);
@@ -666,20 +658,15 @@ class FieldBuilder
      * @param  array $attributes
      * @param  array $errors
      * @param  string $htmlId
-     * @param  bool $required
      * @return array
      */
-    protected function getHtmlAttributes($type, $attributes, $errors, $htmlId, $required)
+    protected function getHtmlAttributes($type, $attributes, $errors, $htmlId)
     {
         $attributes['class'] = $this->getClasses($type, $attributes, $errors);
 
         $attributes['id'] = $htmlId;
 
-        if ($required && !in_array('required', $attributes)) {
-            $attributes[] = 'required';
-        }
-
-        unset($attributes['template'], $attributes['required'], $attributes['label']);
+        unset($attributes['template'], $attributes['label']);
 
         return $attributes;
     }
@@ -755,9 +742,9 @@ class FieldBuilder
         $hasErrors = !empty($errors);
         $customTemplate = $this->getCustomTemplate($attributes);
 
-        $attributes = $this->getHtmlAttributes($type, $attributes, $errors, $id, $required);
+        $attributes = $this->getHtmlAttributes($type, $attributes, $errors, $id);
 
-        $input = $this->buildControl($type, $name, $value, $attributes, $options, $htmlName);
+        $input = $this->buildControl($type, $name, $value, $attributes, $options, $htmlName, $hasErrors);
 
         return $this->theme->render(
             $customTemplate,
@@ -775,10 +762,11 @@ class FieldBuilder
      * @param array $attributes
      * @param array|null $options
      * @param string $htmlName
-     *
+     * @param bool $hasErrors
      * @return string
+     *
      */
-    protected function buildControl($type, $name, $value, $attributes, $options, $htmlName)
+    protected function buildControl($type, $name, $value, $attributes, $options, $htmlName, $hasErrors = false)
     {
         switch ($type) {
             case 'password':
@@ -801,7 +789,8 @@ class FieldBuilder
                     $htmlName,
                     $this->getOptionsList($name, $options),
                     $value,
-                    $attributes
+                    $attributes,
+                    $hasErrors
                 );
             case 'checkbox':
                 return $this->form->checkbox(

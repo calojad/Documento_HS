@@ -12,13 +12,14 @@
     ],
     "require": {
         "php": ">=7.0.0",
+        "barryvdh/laravel-dompdf": "dev-master",
         "fideloper/proxy": "~3.3",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "5.5.*",
-        "styde/html": "~1.0",
         "lesichkovm/laravel-advanced-route": "dev-master",
-        "phpoffice/phpword": "v0.13.*"
+        "phpoffice/phpword": "v0.13.*",
+        "styde/html": "~1.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

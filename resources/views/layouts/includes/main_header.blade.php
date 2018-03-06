@@ -33,6 +33,9 @@
                                 <a href="{{ URL::to('/home') }}"><i class="fa fa-file"></i> Documento</a>
                             </li>
                             <li>
+                                <a href="{{ URL::to('/documento/exportarmatriz') }}"><i class="fa fa-clipboard"></i> Exportar Matriz</a>
+                            </li>
+                            <li>
                                 <a href="{{ URL::to('/mantenimiento/ambitos') }}"><i class="fa fa-wrench"></i> Mantenimientos</a>
                             </li>
                             <li>
