@@ -15,6 +15,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 
 class MantenimientoController extends Controller
 {
@@ -181,6 +182,14 @@ class MantenimientoController extends Controller
     }
     public function postEditarusuario($id){
         $data = Input::all();
+        if(Input::get('contraseña') != null){
+            request()->validate([
+                 'email' => 'required|string|email|max:255',
+                 'contraseña' => 'required|string|min:6|confirmed',
+            ]);
+            $data['password'] = bcrypt(Input::get('contraseña'));
+        }
+
         $usuario = User::find($id);
         $usuario->update($data);
         return Redirect::to('mantenimiento/usuarios');
@@ -225,6 +234,11 @@ class MantenimientoController extends Controller
         $tipoRiesgo = new TipoRiesgos();
         $titulo = 'CREAR CATEGORIA DE RIESGO';
         return view('mantenimientos.tipoRiesgo.form', compact('tipoRiesgo','titulo'));
+    }
+    public function getCrearusuario(){
+        $usuario = new User();
+        $titulo = 'CREAR USUARIO';
+        return view('mantenimientos.usuario.form',compact('usuario','titulo'));
     }
     //    CREAR POST'S===============================================
     public function postCrearambito(){
@@ -278,6 +292,18 @@ class MantenimientoController extends Controller
 
         return Redirect::to('mantenimiento/tiporiesgo');
     }
+    public function postCrearusuario(){
+        request()->validate([
+             'email' => 'required|string|email|max:255',
+             'contraseña' => 'required|string|min:6|confirmed',
+        ]);
+        $pass = bcrypt(Input::get('contraseña'));
+        $data = Input::all();
+        $data['password'] = $pass;
+        User::create($data);
+
+        return Redirect::to('mantenimiento/usuarios');
+    }
 //    ELIMINAR===============================================
     public function getEliminarambito($id){
         $ambito = Ambito::find($id);
@@ -320,5 +346,11 @@ class MantenimientoController extends Controller
         $tiporiesgo->delete();
 
         return Redirect::to('mantenimiento/tiporiesgo');
+    }
+    public function getEliminarusuario($id){
+        $usuario = User::find($id);
+        $usuario->delete();
+
+        return json_encode('/mantenimiento/usuarios');
     }
 }

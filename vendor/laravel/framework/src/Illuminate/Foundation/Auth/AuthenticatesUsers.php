@@ -4,7 +4,9 @@ namespace Illuminate\Foundation\Auth;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
+use Styde\Html\Facades\Alert;
 
 trait AuthenticatesUsers
 {
@@ -15,8 +17,11 @@ trait AuthenticatesUsers
      *
      * @return \Illuminate\Http\Response
      */
-    public function showLoginForm()
+    public function showLoginForm($alert=0)
     {
+        if($alert == 404)
+            Alert::danger()
+                 ->html('<label style="font-size: 12pt;"><samp class="glyphicon glyphicon-ban-circle" style="padding-right: 10px;"></samp> Su cuenta no esta activada</label>');
         return view('auth.login');
     }
 
@@ -114,7 +119,12 @@ trait AuthenticatesUsers
      */
     protected function authenticated(Request $request, $user)
     {
-        //
+        if($user->estado == 2){
+            $request->session()->invalidate();
+            return redirect('/login/404');
+        }
+        else
+            Session::put('userId',$user->id);
     }
 
     /**
@@ -153,7 +163,7 @@ trait AuthenticatesUsers
         $this->guard()->logout();
 
         $request->session()->invalidate();
-
+        
         return redirect('/');
     }
 

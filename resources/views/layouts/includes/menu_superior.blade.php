@@ -1,7 +1,6 @@
 <nav class="navbar navbar-default navbar-static-top">
     <div class="container">
         <div class="navbar-header">
-
             <!-- Collapsed Hamburger -->
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
                 <span class="sr-only">Toggle Navigation</span>
@@ -11,6 +10,7 @@
             </button>
 
             <!-- Branding Image -->
+            <a class="navbar-left" href="{{ url('/') }}"><img src="{{asset('images/logo/Ingenieria_Soluciones-Loga.png')}}" width="55"></a>
             <a class="navbar-brand" href="{{ url('/') }}">
                 {{ config('app.name', 'Laravel') }}
             </a>
@@ -41,9 +41,11 @@
                             <li>
                                 <a href="{{ URL::to('/documento/exportarmatriz') }}"><i class="fa fa-clipboard"></i> Exportar Matriz</a>
                             </li>
+                            @if(Auth::user()->role == 1)
                             <li>
                                 <a href="{{ URL::to('/mantenimiento/ambitos') }}"><i class="fa fa-wrench"></i> Mantenimientos</a>
                             </li>
+                            @endif
                             <li>
                                 <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                     <i class="fa fa-sign-out"></i> Cerrar Sesión

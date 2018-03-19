@@ -1,5 +1,4 @@
 <header class="main-header">
-
     <!-- Logo -->
     <a href="{{ url('/') }}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -7,7 +6,6 @@
         <!-- logo for regular state and mobile devices -->
         <span class="logo-lg"><b>Higiene </b>y Salud</span>
     </a>
-
     <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
         <!-- Sidebar toggle button-->
@@ -35,9 +33,11 @@
                             <li>
                                 <a href="{{ URL::to('/documento/exportarmatriz') }}"><i class="fa fa-clipboard"></i> Exportar Matriz</a>
                             </li>
+                            @if(Auth::user()->role == 1)
                             <li>
                                 <a href="{{ URL::to('/mantenimiento/ambitos') }}"><i class="fa fa-wrench"></i> Mantenimientos</a>
                             </li>
+                            @endif
                             <li>
                                 <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                     <i class="fa fa-sign-out"></i> Cerrar Sesión

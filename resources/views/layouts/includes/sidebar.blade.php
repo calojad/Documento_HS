@@ -5,7 +5,7 @@
             <li class="header">TABLAS</li>
             <li>
                 <a href="{{URL::to('/mantenimiento/ambitos')}}">
-                    <i class="fa fa-group"></i> <span>Ambitos</span>
+                    <i class="fa fa-umbrella"></i> <span>Ambitos</span>
                 </a>
             </li>
             {{--<li>
@@ -23,11 +23,11 @@
                     <i class="fa fa-check-square-o"></i> <span>Objetivos</span>
                 </a>
             </li>
-            <li>
+            {{--<li>
                 <a href="{{URL::to('/mantenimiento/parrafos')}}">
                     <i class="fa fa-indent"></i> <span>Parrafos</span>
                 </a>
-            </li>
+            </li>--}}
             <li>
                 <a href="{{URL::to('/mantenimiento/politicas')}}">
                     <i class="fa fa-legal"></i> <span>Politicas</span>
@@ -48,11 +48,11 @@
                     <i class="fa fa-list-ul"></i> <span>Tipo de Riesgos</span>
                 </a>
             </li>
-            {{--<li>
+            <li>
                 <a href="{{URL::to('/mantenimiento/usuarios')}}">
-                    <i class="fa fa-user"></i> <span>Usuarios</span>
+                    <i class="fa fa-users"></i> <span>Usuarios</span>
                 </a>
-            </li>--}}
+            </li>
         </ul>
     </section>
 </aside>

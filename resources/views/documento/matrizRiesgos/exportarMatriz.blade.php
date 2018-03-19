@@ -11,8 +11,9 @@
                     <div class="panel-heading"><i class="fa fa-clipboard"></i> EXPORTAR MATRIZ</div>
                 </div>
                 <div class="panel-body">
-                    <div class="col-md-12">
-                        <a class="btn btn-primary pull-right" target="_blank" href="{{URL::to('/documento/exportmatrizpdf')}}" title="Exportar Matriz en blanco a PDF">Exportar <i class="fa fa-file-pdf-o"></i></a>
+                    <div class="col-md-12" align="right">
+                        <a class="btn btn-primary" target="_blank" href="{{URL::to('/documento/exportmatrizpdf')}}" title="Exportar Matriz en blanco a PDF">Exportar PDF <i class="fa fa-file-pdf-o"></i></a>
+                        <a class="btn btn-primary" target="_blank" href="{{URL::to('/documento/exportmatrizexcel')}}" title="Exportar Matriz en blanco a Excel">Exportar Excel <i class="fa fa-file-excel-o"></i></a>
                     </div>
                     <div class="col-md-12 box-body">
                         <table class="table table-striped table-bordered table-hover table-checkable datatable">

@@ -19,7 +19,7 @@
         </div>
         <footer class="footer">
             <div class="col-md-12" align="center">
-                <p style="color: #00517e">&copy; 2017 - <b>Andres Loja - CAL</b> &andand;</p>
+                <p style="color: #00517e">Copyright &copy; 2017 <b><a href="http://ingenieria-soluciones.com">Ingeniería en soluciones</a></b> All rights reserved.</p>
             </div>
         </footer>
 

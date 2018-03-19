@@ -9,7 +9,7 @@
         </div>
         <div class="panel-body">
             <div class="col-md-12">
-                <a class="btn btn-primary pull-right" title="Crear Nuevo Usuario"><i class="fa fa-plus-square"></i> Crear</a>
+                <a href="{{URL::to('mantenimiento/crearusuario')}}" class="btn btn-primary pull-right" title="Crear Nuevo Usuario"><i class="fa fa-plus-square"></i> Crear</a>
             </div>
         </div>
         <div class="col-md-12 box-body table-responsive no-padding">
@@ -29,8 +29,8 @@
                         <td>{{$usuario->name}}</td>
                         <td>{{$usuario->email}}</td>
                         <td>
-                            <a title="EDITAR"><i class="fa fa-edit"></i></a>
-                            <a title="ELIMINAR"><i class="fa fa-trash"></i></a>
+                            <a href="{{URL::to('mantenimiento/editarusuario').'/'.$usuario->id}}" title="EDITAR"><i class="fa fa-edit"></i></a>
+                            <a id="btnEliminarUser" title="Eliminar" userId="{{$usuario->id}}"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
                 @endforeach

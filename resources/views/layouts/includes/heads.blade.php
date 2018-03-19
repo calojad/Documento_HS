@@ -6,7 +6,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <title>Higiene y Seguridad</title>
-        <link rel="icon" href="../../favicon.ico">
+        <link rel="icon" href="{{asset('images/logo/Ingenieria_Soluciones-Loga.png')}}">
         {{--Bootstrap--}}
         <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- AdminLTE Skins. Choose a skin from the css/skins

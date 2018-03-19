@@ -14,7 +14,6 @@ use App\Models\Politica;
 use App\Models\Riesgos;
 use App\Models\RiesgosEmpresa;
 use App\Models\TipoRiesgos;
-use Barryvdh\DomPDF\PDF;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -75,6 +74,7 @@ class DocumentoController extends Controller
         $docu['titulo'] = 'Reglamento_HS_'.$data['nombre'];
         $docu['empresa_id'] = $empresa->id;
         $docu['estado'] = 1;
+        $docu['usuario_id'] = Session::get('userId');
 //        VERIFICAMOS SI EXISTE UN DOCUMENTO CON ESA EMPRESA
         $documento = Documento::where('empresa_id',$empresa->id)->first();
         if($documento == null)
@@ -98,7 +98,6 @@ class DocumentoController extends Controller
                 EmpresaDireccion::create($direccion);
             }
         }
-
         Session::put('documentoId',$documento->id);
         Session::put('empresaId',$empresa->id);
         return Redirect()->to('/documento/objetivosambito/1');
@@ -341,7 +340,7 @@ class DocumentoController extends Controller
             $templateWord->setImg('firma_rep',['src'=>storage_path('app/'.$reprecentante->firma),'swh'=>150]);
         else
             $templateWord->setValue('firma_rep','');
-        $templateWord->setImg('cedularepresenta',$reprecentante->cedula);
+        $templateWord->setValue('cedularepresenta',$reprecentante->cedula);
 
 //      GUARDAR DOCUMENTO
         $templateWord->saveAs($documento->titulo.'.docx');
@@ -349,7 +348,10 @@ class DocumentoController extends Controller
         return response()->download($documento->titulo.'.docx');
     }
     public function getExportarmatriz(){
-        $documentos = Documento::where('estado','<>',0)->get();
+        $userId = Session::get('userId');
+        $documentos = Documento::where('estado','<>',0)
+             ->where('usuario_id',$userId)
+             ->get();
         return view('documento.matrizRiesgos.exportarMatriz',compact('documentos'));
     }
     public function getExportmatrizpdf(){
@@ -357,11 +359,10 @@ class DocumentoController extends Controller
         $numTipo = Riesgos::select(DB::raw('count(tipoRiesgo_id) as numero, tipoRiesgo_id'))
              ->groupBy('tipoRiesgo_id')
              ->get();
-//             ->pluck('numero','tipoRiesgo_id');
-//        dd($numTipo);
         $riesgos = Riesgos::orderBy('tipoRiesgo_id','asc')->get();
+        $empresa = null;
         $pdf  = App::make('dompdf.wrapper');
-        $view = View::make('documento.matrizRiesgos.pdfMatriz',compact('riesgos','tipoRiesgo','numTipo'))->render();
+        $view = View::make('documento.matrizRiesgos.pdfMatriz',compact('riesgos','tipoRiesgo','numTipo','empresa'))->render();
 //      portrait - landscape
         $pdf->setPaper('A4', 'landscape');
         $pdf->loadHTML($view);
@@ -391,5 +392,8 @@ class DocumentoController extends Controller
         $pdf->loadHTML($view);
 
         return $pdf->stream('Matriz Riesgos.pdf');
+    }
+    public function getExportmatrizexcel(){
+        
     }
 }

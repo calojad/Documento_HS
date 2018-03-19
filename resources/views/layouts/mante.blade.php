@@ -30,7 +30,7 @@
                 <div class="pull-right hidden-xs">
                     <b>Version</b> 1.0
                 </div>
-                <strong>Copyright &copy; 2017 {{--<a href="https://adminlte.io">Almsaeed Studio</a>--}}</strong> Andres Loja
+                <strong>Copyright &copy; 2017 <a href="http://ingenieria-soluciones.com">Ingeniería en Soluciones.</a></strong> All rights reserved.
             </footer>                                   
         </div>
 
