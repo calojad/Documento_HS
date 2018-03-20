@@ -15,6 +15,7 @@ use App\Models\Riesgos;
 use App\Models\RiesgosEmpresa;
 use App\Models\TipoRiesgos;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
@@ -63,6 +64,8 @@ class DocumentoController extends Controller
             $nombre = date('ymdhis').'_'.$nombre;
             Storage::disk('local')->put($nombre,  File::get($file));
             $data['logo'] = 'public/logos_empresas/'.$nombre;
+            $destinationPath = base_path().'/public/storage/logos_empresas/';
+//            $file->move($destinationPath,$nombre);
         }
 //        VERIFICAMOS SI LA EMPRESA YA ESTA REGISTRADA
         $empresa = Empresa::where('ruc',$data['ruc'])->first();
@@ -74,7 +77,7 @@ class DocumentoController extends Controller
         $docu['titulo'] = 'Reglamento_HS_'.$data['nombre'];
         $docu['empresa_id'] = $empresa->id;
         $docu['estado'] = 1;
-        $docu['usuario_id'] = Session::get('userId');
+        $docu['usuario_id'] = Auth::user()->id;//Session::get('userId');
 //        VERIFICAMOS SI EXISTE UN DOCUMENTO CON ESA EMPRESA
         $documento = Documento::where('empresa_id',$empresa->id)->first();
         if($documento == null)
