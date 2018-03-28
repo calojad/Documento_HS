@@ -23,6 +23,13 @@
                     <i class="fa fa-check-square-o"></i> <span>Objetivos</span>
                 </a>
             </li>
+            @if(Auth::user()->role == 1)
+            <li>
+                <a href="{{URL::to('/mantenimiento/plantillas')}}">
+                    <i class="fa fa-file-word-o"></i> <span>Plantillas</span>
+                </a>
+            </li>
+            @endif
             {{--<li>
                 <a href="{{URL::to('/mantenimiento/parrafos')}}">
                     <i class="fa fa-indent"></i> <span>Parrafos</span>
@@ -48,11 +55,13 @@
                     <i class="fa fa-list-ul"></i> <span>Tipo de Riesgos</span>
                 </a>
             </li>
+            @if(Auth::user()->role == 1)
             <li>
                 <a href="{{URL::to('/mantenimiento/usuarios')}}">
                     <i class="fa fa-users"></i> <span>Usuarios</span>
                 </a>
             </li>
+            @endif
         </ul>
     </section>
 </aside>

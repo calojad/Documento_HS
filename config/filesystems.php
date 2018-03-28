@@ -42,7 +42,10 @@ return [
     */
 
     'disks' => [
-
+         'storage' => [
+              'driver' => 'local',
+              'root' => storage_path('app/'),
+         ],
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/public/logos_empresas'),
@@ -50,6 +53,10 @@ return [
         'local_firma' => [
              'driver' => 'local',
              'root' => storage_path('app/public/firmas'),
+        ],
+        'local_plantilla' => [
+             'driver' => 'local',
+             'root' => storage_path('app/public/plantilla_Word'),
         ],
 
         'public' => [

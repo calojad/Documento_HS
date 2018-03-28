@@ -8,6 +8,7 @@ use App\Models\DocumentoAmbito;
 use App\Models\DocumentoObjetivo;
 use App\Models\DocumentoPolitica;
 use App\Models\EmpresaDireccion;
+use App\Models\Plantillas;
 use App\Models\Representante;
 use App\Models\Objetivo;
 use App\Models\Politica;
@@ -164,6 +165,8 @@ class DocumentoController extends Controller
             $nombre = date('ymdhis').'_'.$nombre;
             Storage::disk('local_firma')->put($nombre,  File::get($file));
             $dataR['firma'] = 'public/firmas/'.$nombre;
+            $destinationPath = base_path().'/public/storage/firmas/';
+//            $file->move($destinationPath,$nombre);
         }
 //        VERIFICAR SI EXISTE UN REPRECENTANTE LEGAL YA REGISTRADO
         if($reprecentante == null){
@@ -243,12 +246,16 @@ class DocumentoController extends Controller
              ->groupBy('riesgo.tipoRiesgo_id')
              ->get();
 //==========================CREA INSTANCIA DE PLANTILLA===================================
-        if($documento->encabezado == 1)
+        if($documento->encabezado == 1){
+            $plantilla = Plantillas::find();
             $templateWord = new TemplateProcessor(asset('/storage/plantilla_Word/REG_HIG_Y_SEGURIDAD_1.docx'));
-        else if($documento->encabezado == 2)
+        }
+        else if($documento->encabezado == 2){
             $templateWord = new TemplateProcessor(asset('/storage/plantilla_Word/REG_HIG_Y_SEGURIDAD_2.docx'));
-        else
+        }
+        else{
             $templateWord = new TemplateProcessor(asset('/storage/plantilla_Word/REG_HIG_Y_SEGURIDAD_3.docx'));
+        }
 //      VARIABLES SEGUN N° TRABAJADORES
 //        if($poblacion >= 10)
 

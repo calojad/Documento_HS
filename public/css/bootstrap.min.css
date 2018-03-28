@@ -4297,7 +4297,7 @@ a.thumbnail.active,a.thumbnail:focus,a.thumbnail:hover {
 }
 .alert {
 	padding:15px;
-	margin-bottom:20px;
+	margin-bottom:10px;
 	border:1px solid transparent;
 	border-radius:4px
 }
@@ -4944,6 +4944,11 @@ a.list-group-item-danger.active,a.list-group-item-danger.active:focus,a.list-gro
 .well-sm {
 	padding:9px;
 	border-radius:3px
+}
+span.alert-icon{
+	float:left;
+	font-size:20pt;
+	line-height:0.8;
 }
 .close {
 	float:right;
@@ -5770,4 +5775,12 @@ button.close {
 		display:none!important
 	}
 }
-
+div.centrado_sin{	
+	padding: 1em 3em;
+	margin: 1em 25%;
+}
+div.centrado_con{
+	width: 400px;
+	margin: 0 auto;
+	margin-bottom: 15px;
+}

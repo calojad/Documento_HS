@@ -41,11 +41,9 @@
                             <li>
                                 <a href="{{ URL::to('/documento/exportarmatriz') }}"><i class="fa fa-clipboard"></i> Exportar Matriz</a>
                             </li>
-                            @if(Auth::user()->role == 1)
                             <li>
                                 <a href="{{ URL::to('/mantenimiento/ambitos') }}"><i class="fa fa-wrench"></i> Mantenimientos</a>
                             </li>
-                            @endif
                             <li>
                                 <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                     <i class="fa fa-sign-out"></i> Cerrar Sesión

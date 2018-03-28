@@ -13,7 +13,7 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label">Tipo de Riesgo:</label>
                     <div class="col-md-7">
-                        <input name="riesgo" class="form-control" type="text" value="{{$tipoRiesgo->riesgo}}">
+                        <input name="riesgo" class="form-control" type="text" value="{{$tipoRiesgo->riesgo}}" autofocus>
                     </div>
                 </div>
             </div>
