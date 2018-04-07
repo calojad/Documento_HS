@@ -68,13 +68,13 @@
                     <label class="control-label col-md-3">Encabezado:</label>
                     <div class="col-md-8">
                         <label class="col-md-4" style="cursor: pointer;">Ninguno
-                            <input id="radEnca_3" name="encabezado" type="radio" value="3" class="radEncabezado">
+                            <input id="radEnca_3" name="encabezado" type="radio" value="1" class="radEncabezado">
                         </label>
                         <label class="col-md-4" style="cursor: pointer;">Simple
-                            <input id="radEnca_1" name="encabezado" type="radio" value="1" class="radEncabezado">
+                            <input id="radEnca_1" name="encabezado" type="radio" value="2" class="radEncabezado">
                         </label>
                         <label class="col-md-4" style="cursor: pointer;">ISO
-                            <input id="radEnca_2" name="encabezado" type="radio" value="2" class="radEncabezado">
+                            <input id="radEnca_2" name="encabezado" type="radio" value="3" class="radEncabezado">
                         </label>
                     </div>
                 </div>

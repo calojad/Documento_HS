@@ -246,7 +246,7 @@ class DocumentoController extends Controller
              ->groupBy('riesgo.tipoRiesgo_id')
              ->get();
 //==========================CREA INSTANCIA DE PLANTILLA===================================
-        if($documento->encabezado == 1){
+        /*if($documento->encabezado == 1){
             $plantilla = Plantillas::find();
             $templateWord = new TemplateProcessor(asset('/storage/plantilla_Word/REG_HIG_Y_SEGURIDAD_1.docx'));
         }
@@ -255,7 +255,9 @@ class DocumentoController extends Controller
         }
         else{
             $templateWord = new TemplateProcessor(asset('/storage/plantilla_Word/REG_HIG_Y_SEGURIDAD_3.docx'));
-        }
+        }*/
+        $plantilla = Plantillas::find($documento->encabezado);
+        $templateWord = new TemplateProcessor(storage_path('app/'.$plantilla->plantilla));
 //      VARIABLES SEGUN N° TRABAJADORES
 //        if($poblacion >= 10)
 

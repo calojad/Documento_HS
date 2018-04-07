@@ -20,11 +20,11 @@
             var valor = $(this).val();
             var imagenEnca = $('#imgEncabezado');
             if(valor == 1)
-                imagenEnca.attr('src','{{asset('/images/encabesados/Encabezado_1.JPG')}}');
-            else if(valor == 2)
-                imagenEnca.attr('src','{{asset('/images/encabesados/Encabezado_2.JPG')}}');
-            else
                 imagenEnca.attr('src','{{asset('/images/encabesados/Encabezado_3.JPG')}}');
+            else if(valor == 2)
+                imagenEnca.attr('src','{{asset('/images/encabesados/Encabezado_1.JPG')}}');
+            else
+                imagenEnca.attr('src','{{asset('/images/encabesados/Encabezado_2.JPG')}}');
         });
     });
     $(document).keyup(function(event){
@@ -64,14 +64,14 @@
         $('#documentoId').val(docId);
 
         if(docEncabezado == 1){
-            $('#radEnca_1').iCheck('check');
-            imagenEnca.attr('src','{{asset('/images/encabesados/Encabezado_1.JPG')}}')
-        } else if(docEncabezado == 2){
-            $('#radEnca_2').iCheck('check');
-            imagenEnca.attr('src','{{asset('/images/encabesados/Encabezado_2.JPG')}}')
-        } else {
             $('#radEnca_3').iCheck('check');
             imagenEnca.attr('src','{{asset('/images/encabesados/Encabezado_3.JPG')}}')
+        } else if(docEncabezado == 2){
+            $('#radEnca_1').iCheck('check');
+            imagenEnca.attr('src','{{asset('/images/encabesados/Encabezado_1.JPG')}}')
+        } else {
+            $('#radEnca_2').iCheck('check');
+            imagenEnca.attr('src','{{asset('/images/encabesados/Encabezado_2.JPG')}}')
         }
     });
 </script>

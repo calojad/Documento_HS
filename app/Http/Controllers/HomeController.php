@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Documento;
+use App\Models\Plantillas;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Styde\Html\Facades\Alert;
@@ -37,8 +38,9 @@ class HomeController extends Controller
         $documentos = Documento::where('estado','<>',0)
              ->where('usuario_id',$userId)
              ->get();
+        $plantillas = Plantillas::all();
         Session::put('documentoId',0);
         Session::put('empresaId',0);
-        return view('auth.home',compact('documentos'));
+        return view('auth.home',compact('documentos','plantillas'));
     }
 }
