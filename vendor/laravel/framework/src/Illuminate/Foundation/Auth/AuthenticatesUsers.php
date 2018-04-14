@@ -4,7 +4,6 @@ namespace Illuminate\Foundation\Auth;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
 use Styde\Html\Facades\Alert;
 
@@ -123,8 +122,6 @@ trait AuthenticatesUsers
             $request->session()->invalidate();
             return redirect('/login/404');
         }
-        else
-            Session::put('userId',$user->id);
     }
 
     /**
@@ -163,7 +160,7 @@ trait AuthenticatesUsers
         $this->guard()->logout();
 
         $request->session()->invalidate();
-        
+
         return redirect('/');
     }
 

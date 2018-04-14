@@ -78,7 +78,7 @@ class DocumentoController extends Controller
         $docu['titulo'] = 'Reglamento_HS_'.$data['nombre'];
         $docu['empresa_id'] = $empresa->id;
         $docu['estado'] = 1;
-        $docu['usuario_id'] = Auth::user()->id;//Session::get('userId');
+        $docu['usuario_id'] = Auth::user()->id;
 //        VERIFICAMOS SI EXISTE UN DOCUMENTO CON ESA EMPRESA
         $documento = Documento::where('empresa_id',$empresa->id)->first();
         if($documento == null)
@@ -349,7 +349,7 @@ class DocumentoController extends Controller
         }
     }
     public function getExportarmatriz(){
-        $userId = Session::get('userId');
+        $userId = Auth::user()->id;
         $documentos = Documento::where('estado','<>',0)
              ->where('usuario_id',$userId)
              ->get();

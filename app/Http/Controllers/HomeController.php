@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Documento;
 use App\Models\Plantillas;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Styde\Html\Facades\Alert;
@@ -34,7 +35,7 @@ class HomeController extends Controller
             Alert::success()
                  ->html('<label style="font-size: 12pt;"><samp class="glyphicon glyphicon-ok" style="padding-right: 10px;"></samp> Documento <b style="color: #9f191f">"'.$doc.'"</b> Creado Exitosamente</label>');
         }
-        $userId = Session::get('userId');
+        $userId = Auth::user()->id;
         $documentos = Documento::where('estado','<>',0)
              ->where('usuario_id',$userId)
              ->get();
