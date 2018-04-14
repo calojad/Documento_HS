@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
+use Mpdf\Mpdf;
 use PhpOffice\PhpWord\TemplateProcessor;
 use Styde\Html\Facades\Alert;
 use Illuminate\Support\Facades\Input;
@@ -362,13 +363,12 @@ class DocumentoController extends Controller
              ->get();
         $riesgos = Riesgos::orderBy('tipoRiesgo_id','asc')->get();
         $empresa = null;
-        $pdf  = App::make('dompdf.wrapper');
         $view = View::make('documento.matrizRiesgos.pdfMatriz',compact('riesgos','tipoRiesgo','numTipo','empresa'))->render();
 //      portrait - landscape
-        $pdf->setPaper('A4', 'landscape');
-        $pdf->loadHTML($view);
+        $pdf = new \mPDF('','A4',0,'',10,10,10,10,9,9,'L');
+        $pdf->WriteHTML($view);
 
-        return $pdf->stream('Matriz Riesgos.pdf');
+        return $pdf->Output('Matriz_riesgos.pdf','I');
     }
     public function  getExportmatrizemppdf($id){
         $tipoRiesgo = TipoRiesgos::leftjoin('riesgo','riesgo.tipoRiesgo_id','=','tiporiesgo.id')
@@ -387,11 +387,10 @@ class DocumentoController extends Controller
              ->select('riesgo.id','riesgo.tipoRiesgo_id','riesgo.riesgo','riesgo_empresa.empresa_id','riesgo_empresa.probabilidad','riesgo_empresa.consecuencia','riesgo_empresa.estimacion','riesgo_empresa.control','riesgo_empresa.observacion','riesgo_empresa.seguimiento')
              ->get();
         $empresa = Empresa::find($id);
-        $pdf  = App::make('dompdf.wrapper');
         $view = View::make('documento.matrizRiesgos.pdfMatriz',compact('riesgos','tipoRiesgo','numTipo','empresa'))->render();
-        $pdf->setPaper('A4', 'landscape');
-        $pdf->loadHTML($view);
+        $pdf = new Mpdf('','A4',0,'',10,10,10,10,9,9,'L');
+        $pdf->WriteHTML($view);
 
-        return $pdf->stream('Matriz Riesgos.pdf');
+        return $pdf->Output('Matriz_riesgos.pdf','I');
     }
 }
