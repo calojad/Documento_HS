@@ -38,7 +38,7 @@ class HomeController extends Controller
         $documentos = Documento::where('estado','<>',0)
              ->where('usuario_id',$userId)
              ->get();
-        $plantillas = Plantillas::all();
+        $plantillas = Plantillas::all()->pluck('titulo','id');
         Session::put('documentoId',0);
         Session::put('empresaId',0);
         return view('auth.home',compact('documentos','plantillas'));

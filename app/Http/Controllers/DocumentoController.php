@@ -224,6 +224,7 @@ class DocumentoController extends Controller
     }
     public function getExportplantilla($doc=0)
     {
+        try{
         $arrTamaño = [1 => "Microempresa", 2 => "Pequeña empresa", 3 => "Mediana empresa A", 4 => "Mediana empresa B", 5 => "Gran empresa"];
         $si_no = ['No', 'Si'];
         $documento = Documento::find($doc);
@@ -234,11 +235,6 @@ class DocumentoController extends Controller
         $politicas = DocumentoPolitica::where('documento_id', $documento->id)->get();
         $reprecentante = Representante::where('empresa_id', $empresa->id)->first();
         $poblacion = $empresa->hombres + $empresa->mujeres + $empresa->menores + $empresa->vulnerables;
-        /*$riesgos = Riesgos::leftjoin('riesgo_empresa', 'riesgo_empresa.riesgo_id', '=', 'riesgo.id')
-             ->where('riesgo_empresa.empresa_id', $empresa->id)
-             ->select('riesgo.id', 'riesgo.riesgo', 'riesgo.descripcion', 'riesgo.tipoRiesgo_id')
-             ->orderBy('riesgo.tipoRiesgo_id','asc')
-             ->get();*/
         $tipoRiesgos = Riesgos::leftjoin('riesgo_empresa', 'riesgo_empresa.riesgo_id', '=', 'riesgo.id')
              ->leftjoin('tiporiesgo','tiporiesgo.id','=','riesgo.tipoRiesgo_id')
              ->where('riesgo_empresa.empresa_id',$empresa->id)
@@ -246,20 +242,10 @@ class DocumentoController extends Controller
              ->groupBy('riesgo.tipoRiesgo_id')
              ->get();
 //==========================CREA INSTANCIA DE PLANTILLA===================================
-        /*if($documento->encabezado == 1){
-            $plantilla = Plantillas::find();
-            $templateWord = new TemplateProcessor(asset('/storage/plantilla_Word/REG_HIG_Y_SEGURIDAD_1.docx'));
-        }
-        else if($documento->encabezado == 2){
-            $templateWord = new TemplateProcessor(asset('/storage/plantilla_Word/REG_HIG_Y_SEGURIDAD_2.docx'));
-        }
-        else{
-            $templateWord = new TemplateProcessor(asset('/storage/plantilla_Word/REG_HIG_Y_SEGURIDAD_3.docx'));
-        }*/
+
         $plantilla = Plantillas::find($documento->encabezado);
         $templateWord = new TemplateProcessor(storage_path('app/'.$plantilla->plantilla));
 //      VARIABLES SEGUN N° TRABAJADORES
-//        if($poblacion >= 10)
 
 //      COLOCAR RIESGOS
         $templateWord->cloneBlock('CLONEME_TIPO', count($tipoRiesgos));
@@ -356,8 +342,11 @@ class DocumentoController extends Controller
 
 //      GUARDAR DOCUMENTO
         $templateWord->saveAs($documento->titulo.'.docx');
-        
         return response()->download($documento->titulo.'.docx');
+        }catch (\Exception $e){
+            Session::flash('danger','Error al Generar el Documento. Es posible que la plantilla este mal configurada');
+            return Redirect::to('/home');
+        }
     }
     public function getExportarmatriz(){
         $userId = Session::get('userId');
@@ -404,8 +393,5 @@ class DocumentoController extends Controller
         $pdf->loadHTML($view);
 
         return $pdf->stream('Matriz Riesgos.pdf');
-    }
-    public function getExportmatrizexcel(){
-        
     }
 }

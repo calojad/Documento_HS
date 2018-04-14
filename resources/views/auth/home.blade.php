@@ -6,6 +6,7 @@
 <div class="container">
     <div class="row">
         {!! Alert::render() !!}
+        @include('layouts.includes.alerts')
         <div class="col-md-11">
             <div class="panel panel-default">
                 <div class="panel-heading">REGLAMENTO INTERNO DE HIGIENE Y SEGURIDAD</div>
@@ -67,19 +68,8 @@
                 <div class="form-group">
                     <label class="control-label col-md-3">Encabezado:</label>
                     <div class="col-md-8">
-                        <label class="col-md-4" style="cursor: pointer;">Ninguno
-                            <input id="radEnca_3" name="encabezado" type="radio" value="1" class="radEncabezado">
-                        </label>
-                        <label class="col-md-4" style="cursor: pointer;">Simple
-                            <input id="radEnca_1" name="encabezado" type="radio" value="2" class="radEncabezado">
-                        </label>
-                        <label class="col-md-4" style="cursor: pointer;">ISO
-                            <input id="radEnca_2" name="encabezado" type="radio" value="3" class="radEncabezado">
-                        </label>
+                        {!! Form::select('encabezado',$plantillas,null,['class'=>'form-control','id'=>'encabezado']) !!}
                     </div>
-                </div>
-                <div class="col-md-12 img-responsive" style="height: 130px;overflow-x: auto;">
-                    <img id="imgEncabezado" class="col-md-12" src="">
                 </div>
             </div>
             <div class="modal-footer">

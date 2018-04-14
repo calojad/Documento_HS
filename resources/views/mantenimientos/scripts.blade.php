@@ -24,7 +24,7 @@
                     text: 'Eliminar',
                     btnClass: 'btn-red',
                     action: function(){
-                        var url = '{{URL::to('/mantenimineto/eliminarusuario')}}/'+userId;
+                        var url = '{{URL::to('/mantenimiento/eliminarusuario')}}/'+userId;
                         $.get(url,function (json) {
                             window.location.href = json;
                         },'json');

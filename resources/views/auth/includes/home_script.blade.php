@@ -10,23 +10,6 @@
             "autoWidth": false
         });
     });
-    $(document).ready(function() {
-        $('input').iCheck({
-            checkboxClass: 'icheckbox_square-blue',
-            radioClass: 'iradio_square-blue',
-            increaseArea: '5%' // optional
-        });
-        $('.radEncabezado').on('ifClicked', function(event){
-            var valor = $(this).val();
-            var imagenEnca = $('#imgEncabezado');
-            if(valor == 1)
-                imagenEnca.attr('src','{{asset('/images/encabesados/Encabezado_3.JPG')}}');
-            else if(valor == 2)
-                imagenEnca.attr('src','{{asset('/images/encabesados/Encabezado_1.JPG')}}');
-            else
-                imagenEnca.attr('src','{{asset('/images/encabesados/Encabezado_2.JPG')}}');
-        });
-    });
     $(document).keyup(function(event){
         if(event.which === 116){
             window.location.href = "/home";
@@ -59,19 +42,7 @@
     $(document).on('click','#btnConfigDoc',function () {
         var docId = $(this).attr('docId');
         var docEncabezado = $(this).attr('docEncabezado');
-        var imagenEnca = $('#imgEncabezado');
-
         $('#documentoId').val(docId);
-
-        if(docEncabezado == 1){
-            $('#radEnca_3').iCheck('check');
-            imagenEnca.attr('src','{{asset('/images/encabesados/Encabezado_3.JPG')}}')
-        } else if(docEncabezado == 2){
-            $('#radEnca_1').iCheck('check');
-            imagenEnca.attr('src','{{asset('/images/encabesados/Encabezado_1.JPG')}}')
-        } else {
-            $('#radEnca_2').iCheck('check');
-            imagenEnca.attr('src','{{asset('/images/encabesados/Encabezado_2.JPG')}}')
-        }
+        $('#encabezado').val(docEncabezado);
     });
 </script>
