@@ -388,7 +388,7 @@ class DocumentoController extends Controller
              ->get();
         $empresa = Empresa::find($id);
         $view = View::make('documento.matrizRiesgos.pdfMatriz',compact('riesgos','tipoRiesgo','numTipo','empresa'))->render();
-        $pdf = new Mpdf('','A4',0,'',10,10,10,10,9,9,'L');
+        $pdf = new \mPDF('','A4',0,'',10,10,10,10,9,9,'L');
         $pdf->WriteHTML($view);
 
         return $pdf->Output('Matriz_riesgos.pdf','I');
