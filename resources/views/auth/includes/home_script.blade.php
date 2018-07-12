@@ -7,7 +7,7 @@
             "lengthChange": true,
             "searching": true,
             "ordering": true,
-            "autoWidth": false
+            "autoWidth": false,
         });
     });
     $(document).keyup(function(event){

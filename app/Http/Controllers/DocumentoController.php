@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
 use Mpdf\Mpdf;
+use Mpdf\MpdfException;
 use PhpOffice\PhpWord\TemplateProcessor;
 use Styde\Html\Facades\Alert;
 use Illuminate\Support\Facades\Input;
@@ -56,7 +57,7 @@ class DocumentoController extends Controller
              ->get();
         Session::put('documentoId',0);
         Session::put('empresaId',0);
-        return view('documento.datosGenerales.form', compact('empresa','Sucdirecciones','articulos'));
+        return view('documento.datosGenerales.form', compact('empresa','Sucdirecciones'));
     }
     public function postDatosgenerales(){
         $data = Input::all();
@@ -357,7 +358,7 @@ class DocumentoController extends Controller
         return view('documento.matrizRiesgos.exportarMatriz',compact('documentos'));
     }
     public function getExportmatrizpdf(){
-        $tipoRiesgo = TipoRiesgos::orderBy('id','asc')->pluck('riesgo','id');;
+        $tipoRiesgo = TipoRiesgos::orderBy('id','asc')->pluck('riesgo','id');
         $numTipo = Riesgos::select(DB::raw('count(tipoRiesgo_id) as numero, tipoRiesgo_id'))
              ->groupBy('tipoRiesgo_id')
              ->get();
@@ -365,10 +366,26 @@ class DocumentoController extends Controller
         $empresa = null;
         $view = View::make('documento.matrizRiesgos.pdfMatriz',compact('riesgos','tipoRiesgo','numTipo','empresa'))->render();
 //      portrait - landscape
-        $pdf = new \mPDF('','A4',0,'',10,10,10,10,9,9,'L');
-        $pdf->WriteHTML($view);
-
-        return $pdf->Output('Matriz_riesgos.pdf','I');
+        try {
+            $pdf = new \Mpdf\Mpdf([
+                'mode' => '',
+                'format' => 'A4',
+                'default_font_size' => 0,
+                'default_font' => '',
+                'margin_left' => 10,
+                'margin_right' => 10,
+                'margin_top' => 10,
+                'margin_bottom' => 10,
+                'margin_header' => 9,
+                'margin_footer' => 9,
+                'orientation' => 'L'
+            ]);
+            $pdf->WriteHTML($view);
+            return $pdf->Output('Matriz_riesgos.pdf','I');
+        } catch (MpdfException $e) {
+            Session::flash('danger','Error al Generar el Documento.');
+            return Redirect::to('/documento/exportarmatriz');
+        }
     }
     public function  getExportmatrizemppdf($id){
         $tipoRiesgo = TipoRiesgos::leftjoin('riesgo','riesgo.tipoRiesgo_id','=','tiporiesgo.id')
@@ -388,9 +405,34 @@ class DocumentoController extends Controller
              ->get();
         $empresa = Empresa::find($id);
         $view = View::make('documento.matrizRiesgos.pdfMatriz',compact('riesgos','tipoRiesgo','numTipo','empresa'))->render();
-        $pdf = new \mPDF('','A4',0,'',10,10,10,10,9,9,'L');
-        $pdf->WriteHTML($view);
-
-        return $pdf->Output('Matriz_riesgos.pdf','I');
+        try {
+            $pdf = new \Mpdf\Mpdf([
+                'mode' => '',
+                'format' => 'A4',
+                'default_font_size' => 0,
+                'default_font' => '',
+                'margin_left' => 10,
+                'margin_right' => 10,
+                'margin_top' => 10,
+                'margin_bottom' => 10,
+                'margin_header' => 9,
+                'margin_footer' => 9,
+                'orientation' => 'L'
+            ]);
+            $pdf->WriteHTML($view);
+            return $pdf->Output('Matriz_riesgos.pdf','I');
+        } catch (MpdfException $e) {
+            Session::flash('danger','Error al Generar el Documento.');
+            return Redirect::to('/documento/exportarmatriz');
+        }
+    }
+    public function getExportmatrizexcel(){
+        $tipoRiesgo = TipoRiesgos::orderBy('id','asc')->pluck('riesgo','id');
+        $numTipo = Riesgos::select(DB::raw('count(tipoRiesgo_id) as numero, tipoRiesgo_id'))
+            ->groupBy('tipoRiesgo_id')
+            ->get();
+        $riesgos = Riesgos::orderBy('tipoRiesgo_id','asc')->get();
+        $empresa = null;
+        return view('documento.matrizRiesgos.excelMatriz',compact('tipoRiesgo','numTipo','riesgos','empresa'));
     }
 }

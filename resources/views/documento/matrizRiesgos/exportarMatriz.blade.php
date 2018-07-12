@@ -6,6 +6,7 @@
     <div class="col-md-12">
         <div class="row">
             {!! Alert::render() !!}
+            @include('layouts.includes.alerts')
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading"><i class="fa fa-clipboard"></i> EXPORTAR MATRIZ</div>
