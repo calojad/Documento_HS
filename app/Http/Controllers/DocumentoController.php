@@ -68,7 +68,7 @@ class DocumentoController extends Controller
             Storage::disk('local')->put($nombre,  File::get($file));
             $data['logo'] = 'public/logos_empresas/'.$nombre;
             $destinationPath = base_path().'/public/storage/logos_empresas/';
-//            $file->move($destinationPath,$nombre);
+            $file->move($destinationPath,$nombre);
         }
 //        VERIFICAMOS SI LA EMPRESA YA ESTA REGISTRADA
         $empresa = Empresa::where('ruc',$data['ruc'])->first();
@@ -168,7 +168,7 @@ class DocumentoController extends Controller
             Storage::disk('local_firma')->put($nombre,  File::get($file));
             $dataR['firma'] = 'public/firmas/'.$nombre;
             $destinationPath = base_path().'/public/storage/firmas/';
-//            $file->move($destinationPath,$nombre);
+            $file->move($destinationPath,$nombre);
         }
 //        VERIFICAR SI EXISTE UN REPRECENTANTE LEGAL YA REGISTRADO
         if($reprecentante == null){

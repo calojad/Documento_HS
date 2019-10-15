@@ -4,7 +4,7 @@
         <!-- Links, meta, style -->
         @include('layouts.includes.heads')
         <!-- Icono y Titulo de la Pestaña -->
-        <link rel="shortcut icon" href="{{asset('images/icons/ico.ico')}}">
+        <link rel="shortcut icon" href="{{asset('images/logo/Ingenieria_Soluciones-Loga.png')}}">
 @yield('style')
     </head>
 
